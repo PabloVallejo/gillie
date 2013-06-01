@@ -1,73 +1,204 @@
 <!doctype html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>Guillie by PabloVallejo</title>
-    <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-    <script src="javascripts/respond.js"></script>
-    <!--[if lt IE 9]>
-      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-    <!--[if lt IE 8]>
-    <link rel="stylesheet" href="stylesheets/ie.css">
-    <![endif]-->
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="chrome=1">
+        <title>Guillie - JavaScript MicroFramework by PabloVallejo</title>
+        <link rel="stylesheet" href="stylesheets/styles.css">
+        <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+        <link rel="stylesheet" href="stylesheets/prettify.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+        <script src="javascripts/prettify/prettify.js"></script>
+        <script src="javascripts/main.js"></script>
+        <!--[if lt IE 9]>
+          <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+        <!--[if lt IE 8]>
+        <link rel="stylesheet" href="stylesheets/ie.css">
+        <![endif]-->
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 
-  </head>
-  <body>
-      <div id="header">
-        <nav>
-          <li class="fork"><a href="https://github.com/PabloVallejo/guillie">View On GitHub</a></li>
-          <li class="downloads"><a href="https://github.com/PabloVallejo/guillie/zipball/master">ZIP</a></li>
-          <li class="downloads"><a href="https://github.com/PabloVallejo/guillie/tarball/master">TAR</a></li>
-          <li class="title">DOWNLOADS</li>
-        </nav>
-      </div><!-- end header -->
+    </head>
+    <body>
+        <div id="header">
+            <nav>
+                <li class="fork"><a href="https://github.com/PabloVallejo/guillie">View On GitHub</a></li>
+                <li class="downloads"><a href="https://github.com/PabloVallejo/guillie/zipball/master">ZIP</a></li>
+                <li class="downloads"><a href="https://github.com/PabloVallejo/guillie/tarball/master">TAR</a></li>
+                <li class="title">DOWNLOADS</li>
+            </nav>
+        </div><!-- end header -->
 
-    <div class="wrapper">
+        <div class="wrapper">
 
-      <section>
-        <div id="title">
-          <h1>Guillie</h1>
-          <p>Javascript Microframework inspired in BackboneJS</p>
-          <hr>
-          <span class="credits left">Project maintained by <a href="https://github.com/PabloVallejo">PabloVallejo</a></span>
-          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="http://twitter.com/#!/michigangraham">mattgraham</a></span>
-        </div>
+        <section>
+            <div id="title">
+                <h1>Guillie</h1>
+                <p>Javascript Microframework inspired in BackboneJS</p>
+                <hr>
+            </div>
 
-        <h3>Welcome to GitHub Pages.</h3>
+            <h3>Introduction</h3>
 
-<p>This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here using GitHub Flavored Markdown, select a template crafted by a designer, and publish. After your page is generated, you can check out the new branch:</p>
+            <p>
+            Gillie is JavaScript micro-framework that lets you easily create JavaScript classes to better
+            organize your app.
 
-<pre><code>$ cd your_repo_root/repo_name
-$ git fetch origin
-$ git checkout gh-pages
-</code></pre>
+            Gillie can as well serve as an introductory framework to learn Backbone, given
+            its similarities with a Backbone view. On the other hand Gillie is very easy to setup and
+            only requires jQuery.</p>
 
-<p>If you're using the GitHub for Mac, simply sync your repository and you'll see the new branch.</p>
 
-<h3>Designer Templates</h3>
+            <p>All the methods you write in a Gillie class will extend the prototype object and will be shared for every instance.</p>
 
-<p>We've crafted some handsome templates for you to use. Go ahead and continue to layouts to browse through them. You can easily go back to edit your page before publishing. After publishing your page, you can revisit the page generator and switch to another theme. Your Page content will be preserved if it remained markdown format.</p>
 
-<h3>Rather Drive Stick?</h3>
 
-<p>If you prefer to not use the automatic generator, push a branch named <code>gh-pages</code> to your repository to create a page manually. In addition to supporting regular HTML content, GitHub Pages support Jekyll, a simple, blog aware static site generator written by our own Tom Preston-Werner. Jekyll makes it easy to create site-wide headers and footers without having to copy them across every page. It also offers intelligent blog support and other advanced templating features.</p>
+        <h3>Basic class</h3>
+        <pre class="prettyprint lang-js">
 
-<h3>Authors and Contributors</h3>
+var View = Gillie.extend({
 
-<p>You can <a href="https://github.com/blog/821" class="user-mention">@mention</a> a GitHub username to generate a link to their profile. The resulting <code>&lt;a&gt;</code> element will link to the contributor's GitHub Profile. For example: In 2007, Chris Wanstrath (<a href="https://github.com/defunkt" class="user-mention">@defunkt</a>), PJ Hyett (<a href="https://github.com/pjhyett" class="user-mention">@pjhyett</a>), and Tom Preston-Werner (<a href="https://github.com/mojombo" class="user-mention">@mojombo</a>) founded GitHub.</p>
+        initialize: function() {
+            // Do stuff...
+        }
 
-<h3>Support or Contact</h3>
+    ,   events {
+            'click .my-link': 'handleClick'
+        }
 
-<p>Having trouble with Pages? Check out the documentation at <a href="http://help.github.com/pages">http://help.github.com/pages</a> or contact <a href="mailto:support@github.com">support@github.com</a> and we’ll help you sort it out.</p>
+    ,   handleClick: function( e ) {
+            e.preventDefault();
+
+            console.log( "It works" );
+
+        }
+
+});
+
+// Create instance
+var myView = new View;
+
+        </pre>
+
+        <h3>Events</h3>
+        <p>The events sintaxis is intended to be very readable. You define your events in
+           the <strong>events</strong> attribute, using a simple sintax: event, selector, and callback as
+           the value of the key.</p>
+        <pre class="prettyprint" data-lang="js">
+var View = Gillie.extend({
+
+        events {
+                'click .my-link': 'handleClick'
+            ,   'keyup .my-input': 'handleType'
+            ,   'dbclick .second-link': 'handleDbClick'
+        }
+
+        ...
+});
+        </pre>
+
+
+
+
+        <h3>Understanding `el`</h3>
+        <p><strong>el</strong> is a class attribute that helps you namespacing your selectors
+            in order to avoid conflicts. <strong>el</strong> Can be the name of you container.
+            In this case, if you have a container let's say <strong>.container-1</strong>, you just have to set <strong>el</strong> to that class and the events you define will be bound to elements within that container. If you don't define an <strong>el</strong> attribute, it will be set to <strong>document</strong>.
+        </p>
+
+        <pre class="prettyprint" data-lang="js">
+var View = Gillie.extend({
+
+        initialize: function() {
+            // Do stuff...
+        }
+
+        // Element to bind from
+    ,   el: '.container-1'
+
+        //  Events will be bound to .container-1 elements
+    ,   events {
+            'click .my-link': 'handleClick'
+        }
+
+    ,   handleClick: function( e ) {
+            e.preventDefault();
+
+            console.log( "It works" );
+
+        }
+
+});
+
+
+        </pre>
+
+    <h3>Getting data attributes</h3>
+    <p>Contrary to jQuery, in Gillie the context inside the callbacks of events is not the element that fired the event, but the class in which we're defining the events. So in order to get the element that fired the
+        event, we have to use <strong>e.currentTarget</strong> like in this example.</p>
+
+<pre class="prettyprint" data-lang="js">
+
+    var View = Gillie.extend({
+
+        initialize: function() {
+            // Do stuff...
+        }
+
+    ,   el: '.container-1'
+
+    ,   events {
+            'click .my-link': 'handleClick'
+        }
+
+    ,   handleClick: function( e ) {
+            e.preventDefault();
+
+            // `e` holds an attribute pointing the target of the event
+            // which we can use to access that element.
+            var title = $( e.currentTarget ).data( "title" );
+            console.log( title );
+
+        }
+
+})
+
+</pre>
+
+
+        <h3>Usage</h3>
+        <p>In order to start writing your app, include your script as follows.</p>
+        <pre class="prettyprint lang-html">
+&lt;script src="js/jquery.js"&gt;&lt;/script&gt;
+&lt;script src="js/gillie.js"&gt;&lt;/script&gt;
+&lt;script src="js/yourapp.js"&gt;&lt;/script&gt;
+        </pre>
+
+
+            <h3>History</h3>
+
+            <p>I was working in a JavaScript project that had a large codebase, at the same time
+            I was learning Backbone on my own, and was fascinated with it, one day I thought that
+            it would be nice to use Backbone in our project, so that we can take advantage of its features.</p>
+
+            <p>Even though we were using an MVC model at the project, I realized that implementing Backbone on it wouldn't be that easy, So I decided to create a small library which would give a more clear structure to our views
+            and give us several Backbone features without requiring us to dramatically affect the codebase.</p>
+
+            <p>Is in this way how Gillie was borned.</p>
+
+            <h3>Motivation</h3>
+            <p>On the other hand, I hope Gillie to make it easy for people to get used to new JavaScript design patterns
+                and to help them to start using MV* frameworks like <a href="#">Backbone</a>, <a href="#">AngularJS</a>, <a href="#">EmberJS</a> and the like.</p>
+
+
+            <h3>Credits</h3>
+            <p>Gillie's class structure is based on <a href="http://ejohn.org/blog/simple-javascript-inheritance/">Simple Class Inheritance</a> from <a href="http://ejohn.org/">John Resig</a>, and the events sintax
+        has been adapted from <a href="http://backbonejs.org/#View">Backbone.View</a>.</p>
+
       </section>
 
     </div>
     <!--[if !IE]><script>fixScale(document);</script><![endif]-->
-    
+
   </body>
 </html>
