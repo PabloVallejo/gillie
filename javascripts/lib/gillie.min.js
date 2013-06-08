@@ -1,0 +1,5 @@
+/*
+* Gillie 0.1 | http://PabloVallejo.github.io/gillie
+*/
+(function(k,g){var h=/^(\S+)\s*(.*)$/,f=!1,l=/xyz/.test(function(){xyz})?/\b_super\b/:/.*/,h=/^(\S+)\s*(.*)$/;this.Gillie=function(){this.bind=function(a,b){return function(){return a.apply(b,arguments)}};this.delegateEvents=function(a){if(!a&&!(a=this.events))return this;for(var b in a){var e=a[b];if(e=this[a[b]]){var d=b.match(h),c=d[1],d=d[2],j=this.el||document,e=this.bind(e,this);if(""===d)g(j).on(c,e);else g(j).on(c,d,e)}}return this}};Gillie.extend=function(a){function b(){f||(this.initialize&&
+this.initialize.apply(this,arguments),this.delegateEvents())}var e=this.prototype;f=!0;var d=new this;f=!1;for(var c in a)d[c]="function"==typeof a[c]&&"function"==typeof e[c]&&l.test(a[c])?function(a,b){return function(){var c=this._super;this._super=e[a];var d=b.apply(this,arguments);this._super=c;return d}}(c,a[c]):a[c];b.prototype=d;b.prototype.constructor=b;b.extend=arguments.callee;return b};k.Gillie=this.Gillie})(this,this.jQuery);
