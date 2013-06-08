@@ -43,4 +43,9 @@ var view = Gillie.extend({
 
 ```
 
-CodePen Example + Examples
+## Live Examples
+
+You can refer to the examples put together in codePen.
+
+- [Binding events](http://codepen.io/PabloVallejo/pen/fhHuC)
+- [Getting data attributes](http://codepen.io/PabloVallejo/pen/rIbiE)
