@@ -1,0 +1,60 @@
+@import url(http://fonts.googleapis.com/css?family=PT+Sans+Caption:400,700);
+
+body {
+  background: #eee;
+  color: #555;
+  font-family: 'PT Sans Caption', sans-serif;
+}
+
+.container {
+  width: 400px;
+  position: relative;
+  margin: 50px auto;
+
+}
+
+.container .sample {
+  background: white;
+}
+
+.container .sample p {
+  cursor: pointer;
+}
+
+.container .sample p:hover {
+  background: #f8f8f8;
+}
+
+p {
+  margin: 0;
+  padding: 10px 10px;
+  border-bottom: 1px solid #a5da95;
+}
+
+.container p:last-child {
+  border-bottom: none;
+}
+
+.about {
+  padding: 15px 0 0 0;
+  margin-top: 35px;
+  border-bottom: none;
+  border-top: 1px solid white;
+  text-align: center;
+  color: #bbb;
+  font-size: 13px;
+}
+
+.description {
+  text-align: center;
+  padding-top: 10px;
+}
+
+a {
+  text-decoration: none;
+  color: #a5da95;
+}
+
+a:hover {
+  text-decoration: underline;
+}

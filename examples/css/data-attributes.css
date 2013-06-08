@@ -1,0 +1,96 @@
+@import url(http://fonts.googleapis.com/css?family=PT+Sans+Caption:400,700);
+
+body {
+  background: #eee;
+  color: #555;
+  font-family: 'PT Sans Caption', sans-serif;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+.container {
+  width: 460px;
+  position: relative;
+  margin: 60px auto;
+}
+
+.animals {
+  width: 250px;
+  margin-right: 50px;
+}
+.animals > p {
+   background: #a5da95;
+   text-align: center;
+   color: white;
+}
+
+.animals, .animal-description {
+  display: inline-block;
+  vertical-align: top;
+}
+
+/* Animals */
+.container .animals-list {
+  background: white;
+}
+
+.container .animals p {
+  cursor: pointer;
+}
+
+.container .animals-list p:hover {
+  background: #f8f8f8;
+}
+
+/* animal description */
+.animal-description p {
+  text-align: center;
+}
+table {
+  background-color: white;
+}
+table thead {
+  background-color: #a5da95;
+  color: white;
+}
+
+table td, table th {
+  padding: 5px 10px;
+  font-weight: normal;
+}
+
+p {
+  margin: 0;
+  padding: 10px 10px;
+  border-bottom: 1px solid #a5da95;
+}
+
+.container p:last-child {
+  border-bottom: none;
+}
+
+.description, .about {
+  margin-top: 0px;
+  text-align: center;
+}
+
+.about {
+  padding: 15px 0 0 0;
+  margin-top: 35px;
+  border-bottom: none;
+  border-top: 1px solid white;
+  text-align: center;
+  color: #bbb;
+  font-size: 13px;
+}
+
+a {
+  text-decoration: none;
+  color: #a5da95;
+}
+
+a:hover {
+  text-decoration: underline;
+}

@@ -1,0 +1,47 @@
+<html>
+    <head>
+        <title>Gillie - Getting Data-* attributes</title>
+        <link rel="stylesheet" href="css/data-attributes.css">
+    </head>
+    <body>
+
+        <div class="container view">
+
+            <div class="animals">
+              <p>All Animals</p>
+              <div class="animals-list">
+                <p data-name="Emily" data-family="Giraffe">Animal one</p>
+                <p data-name="Ophelia" data-family="Llama">Animal two</p>
+                <p data-name="Tony" data-family="Panda">Animal three</p>
+              </div>
+
+            </div>
+
+            <div class="animal-description">
+              <table tableborder="0">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Type</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="name">---</td>
+                    <td class="family">---</td>
+                  </tr>
+                </tbody>
+              </table>
+
+            </div>
+             <p class="about">This demo is part of the examples on how to use <a href="http://pablovallejo.github.io/gillie/">Gillie.js</a></p>
+            <p class="description">Getting data-* attributes from elements using e.currentTarget</p>
+
+        </div>
+
+        <script src="js/jquery.js"></script>
+        <script src="js/gillie.js"></script>
+        <script src="js/data-attributes.js"></script>
+    </body>
+
+</html>
