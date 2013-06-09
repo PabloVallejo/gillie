@@ -76,8 +76,7 @@ var View = Gillie.extend({
 });
 
 // Create instance
-var myView = new View;
-
+var myView = new View();
         </pre>
 
         <h3>Events</h3>
@@ -129,8 +128,6 @@ var View = Gillie.extend({
         }
 
 });
-
-
         </pre>
 
     <h3>Getting data attributes</h3>
@@ -139,7 +136,7 @@ var View = Gillie.extend({
 
 <pre class="prettyprint" data-lang="js">
 
-    var View = Gillie.extend({
+var View = Gillie.extend({
 
         initialize: function() {
             // Do stuff...
@@ -161,9 +158,8 @@ var View = Gillie.extend({
 
         }
 
-})
-
-</pre>
+});
+        </pre>
 
 
         <h3>Usage</h3>
