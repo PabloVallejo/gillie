@@ -16,12 +16,17 @@ Download Giliie and include jQuery, Gillie and you app scripts.
 
 ## Basic Usage
 
+To get started, just create a class as shown in this example, and then, create an instance of it.
+
 ```js
 
-var view = Gillie.extend({
+var View = Gillie.extend({
+
+        // Element to bind from
+    ,   el: '.wrapper'
 
         // Method fired after instantiation
-        initialize: function() {
+    ,   initialize: function() {
             console.log( 'Initialize' );
         }
 
@@ -41,6 +46,9 @@ var view = Gillie.extend({
 
 });
 
+// Instantiate the class
+var app = new View();
+
 ```
 
 ## Live Examples
@@ -49,3 +57,8 @@ You can refer to the examples put together in codePen.
 
 - [Binding events](http://codepen.io/PabloVallejo/pen/fhHuC)
 - [Getting data attributes](http://codepen.io/PabloVallejo/pen/rIbiE)
+
+
+## Contributing
+
+Pull requests are highly appreciated. Feel free to report a bug, typo, enhancement or a feature you may want Gillie to have.
