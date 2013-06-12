@@ -62,7 +62,7 @@ var View = Gillie.extend({
             // Do stuff...
         }
 
-    ,   events {
+    ,   events: {
             'click .my-link': 'handleClick'
         }
 
@@ -86,7 +86,7 @@ var myView = new View();
         <pre class="prettyprint" data-lang="js">
 var View = Gillie.extend({
 
-        events {
+        events: {
                 'click .my-link': 'handleClick'
             ,   'keyup .my-input': 'handleType'
             ,   'dbclick .second-link': 'handleDbClick'
@@ -116,7 +116,7 @@ var View = Gillie.extend({
     ,   el: '.container-1'
 
         //  Events will be bound to .container-1 elements
-    ,   events {
+    ,   events: {
             'click .my-link': 'handleClick'
         }
 
@@ -144,7 +144,7 @@ var View = Gillie.extend({
 
     ,   el: '.container-1'
 
-    ,   events {
+    ,   events: {
             'click .my-link': 'handleClick'
         }
 
