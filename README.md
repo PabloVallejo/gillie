@@ -1,7 +1,7 @@
 Gillie - JavaScript MicroFramework
 =======
 
-Gillie is JavaScript micro-framework that lets you easily create JavaScript classes to better organize your app. Gillie can as well serve as an introductory framework to learn Backbone, given its similarities with a Backbone view. On the other hand Gillie is very easy to setup and only requires jQuery.
+Gillie is a JavaScript micro-framework that lets you easily create classes to better organize your app. Gillie can as well serve as an introductory framework to learn Backbone, given its similarities with a Backbone view. On the other hand Gillie is very easy to setup and only requires jQuery.
 
 ## Quick start
 
