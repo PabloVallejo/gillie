@@ -1,74 +1,216 @@
 /**
-* Gillie 0.1
+* Gillie 0.2
 * Micro Framework
 *
-* MIT Licenced.
+* MIT Licensed.
 * (c) 2013, Pablo Vallejo - https://PabloVallejo.github.io/gillie
 *
-* Inspired by Simple JavaScript Inheritance by John Resig, Backbone, jQuery and Underscore.
+* Based on Simple JavaScript Inheritance by John Resig, Backbone, jQuery and Underscore.
 */
+( function( $, window ) {
 
-( function( window, $ ) {
+    var 
 
-    // Taken from Backbone.
-    // Cached regex to split keys for `delegate`.
-    var delegateEventSplitter = /^(\S+)\s*(.*)$/;
+        // Gillie version
+        version = '0.2'
 
-    var initializing = false
+    ,   initializing = false
     ,   fnTest = /xyz/.test( function(){ xyz; }) ? /\b_super\b/ : /.*/
 
-        // Backbone's regex to split keys for `delegate` method.
+        // Base class implementation
+    ,   Gillie = function() { }
+
+        // Extend a given object with all the properties in passed-in object(s)
+        // Adapted from underscore `extend`
+        // https://github.com/jashkenas/underscore/blob/master/underscore.js#L786
+    ,   _extend = function( obj ) {
+
+            $.each( [].slice.call( arguments, 1 ), function( key, source ) {
+
+                if ( source ) {
+                    for ( var prop in source ) {
+                        obj[ prop ] = source[ prop ];
+                    }
+                }
+            });
+
+            return obj;
+        };
+
+
+    // Gillie.Events,
+    // Events API which can be used for triggering `trigger` and 
+    // listening `on` to events.
+    // Adapted from `Backbone.Events`
+    // https://github.com/jashkenas/backbone/blob/master/backbone.js#L69
+    var Events = Gillie.Events = {
+
+            // Bind to events.
+            on: function( name, callback, context ) {
+
+                if ( ! eventsApi( this, 'on', name, [ callback, context ] ) || ! callback ) return this;
+                this._events || ( this._events = {} );
+
+                var events = this._events[ name ] || ( this._events[ name ] = [] );
+                events.push({ callback: callback, context: context, ctx: context || this });
+                return this;
+            }
+
+            // Trigger the callbacks for the event or events that have been bound.
+        ,   trigger: function( name ) {
+
+                if ( ! this._events ) return this;
+                var args = [].slice.call( arguments, 1 );
+                if ( ! eventsApi( this, 'trigger', name, args ) ) return this;
+
+                var events = this._events[ name ];
+                if ( events ) triggerEvents( events, args );
+                return this;
+            }
+
+    };   
+
+    // Regex to split words.
+    var  eventSplitter = /\s+/
+
+        // API for events.
+    ,   eventsApi = function( obj, action, name, rest ) {
+
+            if ( ! name ) return;
+
+            // Handle event maps.
+            //
+            //   { evt1: handle, evt2: handle2 }
+            //
+            if ( typeof name === 'object' ) {
+                for ( var key in name ) {
+                    obj[ action ].apply( obj, [ key, name[key] ].concat( rest ) );
+                }
+                return false;
+            }
+
+
+            // Handle space separated event names 'event1 event2 ...'.
+            if ( eventSplitter.test( name ) ) {
+                var names = name.split( eventSplitter );
+
+                for ( var i = 0, l = names.length; i < l; i++ ) {
+                    obj[ action ].apply( obj, [ names[i] ].concat( rest ) );
+                }
+                return false;
+            }
+
+            return true;
+        }
+
+        // Trigger events
+    ,   triggerEvents = function( events, args ) {
+
+            var ev, i = -1, l = events.length, a1 = args[ 0 ], a2 = args[ 1 ], a3 = args[ 2 ];
+            
+            switch( args.length ) {
+
+                case 0: while( ++i < l ) ( ev = events[ i ] ).callback.call( ev.ctx ); return;
+                case 1: while( ++i < l ) ( ev = events[ i ] ).callback.call( ev.ctx, a1 ); return;
+                case 2: while( ++i < l ) ( ev = events[ i ] ).callback.call( ev.ctx, a1, a2 ); return;
+                case 3: while( ++i < l ) ( ev = events[ i ] ).callback.call( ev.ctx, a1, a2, a3 ); return;
+                default: while( ++i < l ) ( ev = events[ i ] ).callback.apply( ev.ctx, args ); 
+            }
+
+        };
+
+
+
+    // Gillie.Handler
+    // Handlers are used to listen for DOM events, get data from them 
+    // and then route that data to a controller, view or model.
+    var Handler = Gillie.Handler = function( options ) {
+
+            if ( this.initialize ) this.initialize.apply( this, arguments );
+            this.delegateEvents();
+        }   
+
+        // Regex to split keys for `delegate` method.
     ,   delegateEventSplitter = /^(\S+)\s*(.*)$/;
 
 
+    _extend( Handler.prototype, Events, {
 
-    // The base class implementation
-    this.Gillie = function() {
-
-        // Create a function that bound to a given object.
-        // Adapted from underscore `_.bind`
-        this.bind = function( func, context ) {
-            return function() {
-                return func.apply( context, arguments );
-            };
-        };
-
-        // Delegate events
-        this.delegateEvents = function( events ) {
-
-            if ( ! ( events || ( events = this.events ) ) ) return this;
-
-            for( var key in events ) {
-                var method = events[ key ];
-
-                method = this[ events[ key ] ];
-                if ( ! method ) continue;
-
-                var match = key.match( delegateEventSplitter );
-                var eventName = match[ 1 ], selector = match[ 2 ]
-
-                // Element to bind events to. Take document as fallback
-                ,   el = this.el || document;
-
-                // Method
-                method = this.bind( method, this );
-
-                if ( selector === '' ) {
-                    $( el ).on( eventName, method );
-                } else {
-                    $( el ).on( eventName, selector, method );
+            // Create a function that bound to a given object.
+            // Adapted from underscore `_.bind()`.
+            // https://github.com/jashkenas/underscore/blob/master/underscore.js#L583
+            bind: function( func, context ) {
+                return function() {
+                    return func.apply( context, arguments );
                 }
             }
 
-            return this;
-       }
+            // Delegate the events passed from the `events` object.
+            // https://github.com/jashkenas/backbone/blob/master/backbone.js#L1048
+        ,   delegateEvents: function( events ) {
 
-    };
+                if ( ! ( events || ( events = this.events ) ) ) return this;
 
-    // New class that inherits from this class
-    Gillie.extend = function( prop ) {
+                for( var key in events ) {
+                    var method = events[ key ];
 
-        var _super = this.prototype;
+                    method = this[ events[ key ] ];
+                    if ( ! method ) continue;
+
+                    var match = key.match( delegateEventSplitter );
+                    var eventName = match[ 1 ], selector = match[ 2 ]
+
+                    // Element to bind events to. Take document as fallback.
+                    ,   el = this.el || document;
+
+                    // Method
+                    method = this.bind( method, this );
+
+                    if ( selector === '' ) {
+                        $( el ).on( eventName, method );
+                    } else {
+                        $( el ).on( eventName, selector, method );
+                    }
+                }
+
+                return this;
+            }
+
+    });
+
+
+    // Gillie.Controller
+    // Controllers are intended to handle the application main logic,
+    // that is, handler methods call controller methods passing them data
+    // from the DOM, then controller decides what to do with that data, 
+    // whether to send it to the server via the model, or just to process it 
+    // and send it to a view etc.
+    var Controller = Gillie.Controller = function( options ) {
+
+        if ( this.initialize ) this.initialize();
+    }
+
+    _extend( Controller.prototype, Events );
+
+
+    // Gillie.Model
+    // Models take care of talking to the server by making AJAX requests
+    // and then triggering events so that views that are listening to them 
+    // can do actions with the returned data.
+    var Model = Gillie.Model = Controller;
+
+
+    // Gillie.View
+    // In Gillie, views are taken care of affecting DOM elements, 
+    // that means, they subscribe to models events, when these events 
+    // are triggered, views print the new data, of show feedback, etc.
+    var View = Gillie.View = Controller;
+
+
+    // Helpers
+    var extend = function( prop ) {
+
+        var _super = this.prototype, parent = this;
 
         // Instantiate a base class
         initializing = true;
@@ -101,16 +243,13 @@
                 prop[ name ];
         }
 
+
         // Class constructor
-        function Gillie() {
+        function Gillie() { 
 
-            // All construction is actually done in the initialize method
             if ( ! initializing ) {
-
-                if ( this.initialize ) this.initialize.apply( this, arguments );
-                this.delegateEvents();
+                parent.apply( this, arguments ); 
             }
-
         }
 
         // Populate our constructed prototype object
@@ -125,7 +264,12 @@
         return Gillie;
     };
 
-    // Expose Gillie to the global scope
-    window.Gillie = this.Gillie;
 
-})( this, this.jQuery );
+    // Make Handler, Model, View and Controller be extendible
+    Gillie.Handler.extend = Gillie.Model.extend = Gillie.Controller.extend = Gillie.View.extend = extend;
+
+
+    // Expose Gillie to the global scope
+    window.Gillie = Gillie;
+
+})( jQuery, this );
