@@ -1,6 +1,6 @@
 
 // View
-var View = Gillie.extend({
+var View = Gillie.Handler.extend({
 
         // Element to bind from
         el: '.view'

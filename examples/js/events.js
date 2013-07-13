@@ -1,24 +1,24 @@
 
 // View
-var View = Gillie.extend({
+var View = Gillie.Handler.extend({
 
-    // Element to bind from
-    el: '.sample'
+        // Element to bind from
+        el: '.sample'
 
-    // Events
-  , events: {
-      'click p': 'toggleParagraph'
-    }
+        // Events
+    ,   events: {
+            'click p': 'toggleParagraph'
+        }
 
-    // Slides up a paragraph
-  , toggleParagraph: function( e ) {
+        // Slides up a paragraph
+    ,   toggleParagraph: function( e ) {
 
-    // Get the element we're clicking
-      var target = e.currentTarget;
+            // Get the element we're clicking
+            var target = e.currentTarget;
 
-      // Slide it up
-      $( target ).slideUp();
-    }
+            // Slide it up
+            $( target ).slideUp();
+        }
 
 });
 
