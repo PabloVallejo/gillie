@@ -9,7 +9,7 @@
 */
 ( function( $, window ) {
 
-    var 
+    var
 
         // Gillie version
         version = '0.2'
@@ -39,7 +39,7 @@
 
 
     // Gillie.Events,
-    // Events API which can be used for triggering `trigger` and 
+    // Events API which can be used for triggering `trigger` and
     // listening `on` to events.
     // Adapted from `Backbone.Events`
     // https://github.com/jashkenas/backbone/blob/master/backbone.js#L69
@@ -68,7 +68,7 @@
                 return this;
             }
 
-    };   
+    };
 
     // Regex to split words.
     var  eventSplitter = /\s+/
@@ -107,28 +107,48 @@
     ,   triggerEvents = function( events, args ) {
 
             var ev, i = -1, l = events.length, a1 = args[ 0 ], a2 = args[ 1 ], a3 = args[ 2 ];
-            
+
             switch( args.length ) {
 
                 case 0: while( ++i < l ) ( ev = events[ i ] ).callback.call( ev.ctx ); return;
                 case 1: while( ++i < l ) ( ev = events[ i ] ).callback.call( ev.ctx, a1 ); return;
                 case 2: while( ++i < l ) ( ev = events[ i ] ).callback.call( ev.ctx, a1, a2 ); return;
                 case 3: while( ++i < l ) ( ev = events[ i ] ).callback.call( ev.ctx, a1, a2, a3 ); return;
-                default: while( ++i < l ) ( ev = events[ i ] ).callback.apply( ev.ctx, args ); 
+                default: while( ++i < l ) ( ev = events[ i ] ).callback.apply( ev.ctx, args );
             }
 
         };
 
+    var listenMethods = { on: 'listenTo' };
+
+    // Inversion-of-control versions of `on` and `once`. Tell *this* object to
+    // listen to an event in another object ... keeping track of what it's
+    // listening to.
+    $.each( listenMethods, function( implementation, method ) {
+
+        Events[ method ] = function( obj, name, callback ) {
+
+            var listeners = this._listeners || ( this._listeners = {} )
+            ,   id = obj._listenerId || ( obj._listenerId = uniqueId( 'l' ) );
+
+            listeners[ id ] = obj;
+            if ( typeof name === 'object' ) callback = this;
+            obj[ implementation ]( name, callback, this );
+
+            return this;
+        };
+
+    });
 
 
     // Gillie.Handler
-    // Handlers are used to listen for DOM events, get data from them 
+    // Handlers are used to listen for DOM events, get data from them
     // and then route that data to a controller, view or model.
     var Handler = Gillie.Handler = function( options ) {
 
             if ( this.initialize ) this.initialize.apply( this, arguments );
             this.delegateEvents();
-        }   
+        }
 
         // Regex to split keys for `delegate` method.
     ,   delegateEventSplitter = /^(\S+)\s*(.*)$/;
@@ -182,8 +202,8 @@
     // Gillie.Controller
     // Controllers are intended to handle the application main logic,
     // that is, handler methods call controller methods passing them data
-    // from the DOM, then controller decides what to do with that data, 
-    // whether to send it to the server via the model, or just to process it 
+    // from the DOM, then controller decides what to do with that data,
+    // whether to send it to the server via the model, or just to process it
     // and send it to a view etc.
     var Controller = Gillie.Controller = function( options ) {
 
@@ -195,14 +215,14 @@
 
     // Gillie.Model
     // Models take care of talking to the server by making AJAX requests
-    // and then triggering events so that views that are listening to them 
+    // and then triggering events so that views that are listening to them
     // can do actions with the returned data.
     var Model = Gillie.Model = Controller;
 
 
     // Gillie.View
-    // In Gillie, views are taken care of affecting DOM elements, 
-    // that means, they subscribe to models events, when these events 
+    // In Gillie, views are taken care of affecting DOM elements,
+    // that means, they subscribe to models events, when these events
     // are triggered, views print the new data, of show feedback, etc.
     var View = Gillie.View = Controller;
 
@@ -245,10 +265,10 @@
 
 
         // Class constructor
-        function Gillie() { 
+        function Gillie() {
 
             if ( ! initializing ) {
-                parent.apply( this, arguments ); 
+                parent.apply( this, arguments );
             }
         }
 
@@ -263,6 +283,16 @@
 
         return Gillie;
     };
+
+    // Generate a unique intener id ( unique within the entire client session ).
+    // Useful for temporary DOM ids
+    var idCounter = 0
+
+    ,   uniqueId = function( prefix ) {
+            var id = ++ idCounter + '';
+            return prefix ? prefix + id : id;
+        };
+
 
 
     // Make Handler, Model, View and Controller be extendible

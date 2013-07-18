@@ -21,8 +21,8 @@ $( document ).ready( function() {
 
         equal( obj.count, 1, '`count` should be augmented.' );
 
-        obj.trigger( 'event' );                
-        obj.trigger( 'event' );                
+        obj.trigger( 'event' );
+        obj.trigger( 'event' );
         obj.trigger( 'event' );
 
         equal( obj.count, 4, '`count` should be augmented four times.' );
@@ -43,7 +43,7 @@ $( document ).ready( function() {
         obj.trigger( 'a b' );
         equal( obj.count, 3 );
 
-    });    
+    });
 
 
     test( 'Binding and triggering with event maps', function() {
@@ -65,6 +65,17 @@ $( document ).ready( function() {
 
         obj.trigger( 'a b' );
         equal( obj.count, 3 );
+
+    });
+
+
+    test( 'listenTo', 1, function() {
+
+        var a = utils._extend( {}, Gillie.Events )
+        ,   b = utils._extend( {}, Gillie.Events );
+
+        a.listenTo( b, 'event', function() { ok( true ); });
+        b.trigger( 'event' );
 
     });
 
