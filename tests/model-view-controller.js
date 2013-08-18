@@ -1,7 +1,7 @@
 /**
 * General Guillie tests
 *
-* Model, View and Controller have the same methods and structure, 
+* Model, View and Controller have the same methods and structure,
 * so by this version `0.2` of Gillie, they can be tested the same way.
 */
 
@@ -27,7 +27,7 @@ $( document ).ready( function() {
 
     });
 
-    test( 'Calling Model Methods', 2, function() {
+    test( 'Calling Model Methods', 4, function() {
 
     	var Model = Gillie.Model.extend({
 
@@ -35,21 +35,29 @@ $( document ).ready( function() {
 	    			this.setName();
 	    		}
 
+            ,   defaults: {
+                        location: 'New York'
+                    ,   age: 0
+                }
+
     		,	setName: function() {
 	    			this.name = 'John';
-	    			this.surname = 'Doe';	
-	    			ok( true, 'Model function was called.' )	
+	    			this.surname = 'Doe';
+	    			ok( true, 'Model function was called.' )
 	    		}
 
 	    	,	getFullName: function() {
 	    			return this.name + ' ' + this.surname
-	    		} 
+	    		}
 
     	});
 
     	strictEqual( new Model().getFullName(), 'John Doe' );
+        var model = new Model({ age: 10, profession: 'student' });
+        var model1 = new Model({ profession: 'student' });
+
     });
-    
+
 
     test( 'Binding and triggering events', 4, function() {
 
@@ -63,7 +71,7 @@ $( document ).ready( function() {
 	    			this.on({
 	    					event3: this.increment
 	    				,	event4: this.increment
-	    			}, this );	
+	    			}, this );
 
 	    			this.triggerEvents();
 	    		}
@@ -77,7 +85,7 @@ $( document ).ready( function() {
 	    		}
 
     		,	increment: function() {
-					count++;	    				
+					count++;
 	    		}
     	});
 
@@ -126,19 +134,19 @@ $( document ).ready( function() {
 
     		,	setName: function() {
 	    			this.name = 'John';
-	    			this.surname = 'Doe';	
-	    			ok( true, 'View function was called.' )	
+	    			this.surname = 'Doe';
+	    			ok( true, 'View function was called.' )
 	    		}
 
 	    	,	getFullName: function() {
 	    			return this.name + ' ' + this.surname
-	    		} 
+	    		}
 
     	});
 
     	strictEqual( new View().getFullName(), 'John Doe' );
     });
-    
+
 
     test( 'Binding and triggering events', 4, function() {
 
@@ -152,7 +160,7 @@ $( document ).ready( function() {
 	    			this.on({
 	    					event3: this.increment
 	    				,	event4: this.increment
-	    			}, this );	
+	    			}, this );
 
 	    			this.triggerEvents();
 	    		}
@@ -166,7 +174,7 @@ $( document ).ready( function() {
 	    		}
 
     		,	increment: function() {
-					count++;	    				
+					count++;
 	    		}
     	});
 
@@ -215,19 +223,19 @@ $( document ).ready( function() {
 
     		,	setName: function() {
 	    			this.name = 'John';
-	    			this.surname = 'Doe';	
-	    			ok( true, 'Controller function was called.' )	
+	    			this.surname = 'Doe';
+	    			ok( true, 'Controller function was called.' )
 	    		}
 
 	    	,	getFullName: function() {
 	    			return this.name + ' ' + this.surname
-	    		} 
+	    		}
 
     	});
 
     	strictEqual( new Controller().getFullName(), 'John Doe' );
     });
-    
+
 
     test( 'Binding and triggering events', 4, function() {
 
@@ -241,7 +249,7 @@ $( document ).ready( function() {
 	    			this.on({
 	    					event3: this.increment
 	    				,	event4: this.increment
-	    			}, this );	
+	    			}, this );
 
 	    			this.triggerEvents();
 	    		}
@@ -255,7 +263,7 @@ $( document ).ready( function() {
 	    		}
 
     		,	increment: function() {
-					count++;	    				
+					count++;
 	    		}
     	});
 

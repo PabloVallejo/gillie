@@ -1,5 +1,5 @@
 /**
-* Gillie 0.2
+* Gillie 0.3
 * Micro Framework
 *
 * MIT Licensed.
@@ -12,7 +12,7 @@
     var
 
         // Gillie version
-        version = '0.2'
+        version = '0.3'
 
     ,   initializing = false
     ,   fnTest = /xyz/.test( function(){ xyz; }) ? /\b_super\b/ : /.*/
@@ -217,7 +217,23 @@
     // Models take care of talking to the server by making AJAX requests
     // and then triggering events so that views that are listening to them
     // can do actions with the returned data.
-    var Model = Gillie.Model = Controller;
+    var Model = Gillie.Model = function( attributes ) {
+        var defaults;
+        var attrs = attributes || {};
+        this.cid = uniqueId( 'c' );
+        this.attributes = {};
+        if ( defaults = this.defaults ) {
+            attrs = $.extend( {}, defaults, attrs );
+        }
+
+        // Set new attributes
+        // this.set( attrs );
+        this.attributes = attrs;
+        if ( this.initialize ) this.initialize();
+
+    };
+
+    _extend( Model.prototype, Events );
 
 
     // Gillie.View
