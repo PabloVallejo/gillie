@@ -233,7 +233,60 @@
 
     };
 
-    _extend( Model.prototype, Events );
+    _extend( Model.prototype, Events, {
+
+
+            // Set one attribute or several attributes, on the model.
+            //
+            // Setting attributes in a model instance.
+            // model.set({ foo: 1, bar: 2 });
+            //
+            set: function( key, val, options ) {
+                var attr,  attrs, current, unset;
+
+                if ( key == null ) return this;
+
+                // As Backbone's "set", handle both `"key"`, value
+                // and `{ key: value }` - style arguments.
+                if ( typeof key === 'object' ) {
+                    attrs = key;
+                    options = val;
+
+                } else {
+                    ( attrs = {} )[ key ] = val;
+                }
+
+                options || ( options = {} );
+
+                // Get options
+                unset = options.unset;
+
+                // Store current attributes.
+                current = this.attributes;
+
+                // Set every attribute that was passed.
+                for ( attr in attrs ) {
+                    val = attrs[ attr ];
+
+                    // Allways update the attribute.
+                    unset ? delete current[ attr ] : current[ attr ] = val;
+                }
+
+                return this;
+
+            }
+
+            // Backbone's "get", which get the value of an ottribute.
+        ,   get: function( attr ) {
+                return this.attributes[ attr ];
+            }
+
+            // Remove an attribute from the model.
+        ,   unset: function( attr, options ) {
+                return this.set( attr, void 0, _extend( {}, options, { unset: true } ) );
+            }
+
+    });
 
 
     // Gillie.View

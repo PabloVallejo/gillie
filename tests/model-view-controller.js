@@ -104,6 +104,26 @@ $( document ).ready( function() {
     });
 
 
+
+    test( 'Set and unset', 4, function() {
+
+        var m = new Gillie.Model({ id: 'id', foo: 1, bar: 2, baz: 3 });
+
+        m.set({ 'foo': 2 });
+        equal( m.get( 'foo' ), 2 );
+
+        m.set( 'foo', 3 );
+        equal( m.get( 'foo' ), 3 );
+
+        m.unset( 'foo' );
+        equal( m.foo, undefined );
+
+        m.unset({ bar: '' });
+        equal( m.bar, undefined );
+
+    });
+
+
     // Gillie.view
     //----------------------
     module( 'Gillie.View' );
