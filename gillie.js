@@ -286,6 +286,11 @@
                 return this.set( attr, void 0, _extend( {}, options, { unset: true } ) );
             }
 
+            // Return a copy of the model's "attributes" object
+        ,   toJSON: function() {
+                return $.extend( {}, this.attributes );
+            }
+
     });
 
 
