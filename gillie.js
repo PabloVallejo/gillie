@@ -227,19 +227,29 @@
         }
 
         // Set new attributes
-        // this.set( attrs );
+        // 
+        //      this.set( attrs );
+        // 
         this.attributes = attrs;
         if ( this.initialize ) this.initialize();
 
-    };
+        }
+
+    // Cached regular expressions for matching named  param parts and splatted
+    // parts of route strings.
+    // Adapted from https://github.com/jashkenas/backbone/blob/master/backbone.js#L1219
+    ,   namedParam    = /(\(\?)?:\w+/g
+
+    // Cached regexp for removing a triling slash.
+    ,   trailingSlash = /\/$/;
 
     _extend( Model.prototype, Events, {
 
 
             // Set one attribute or several attributes, on the model.
             //
-            // Setting attributes in a model instance.
-            // model.set({ foo: 1, bar: 2 });
+            //      // Setting attributes in a model instance.
+            //      model.set({ foo: 1, bar: 2 });
             //
             set: function( key, val, options ) {
                 var attr,  attrs, current, unset;
@@ -289,6 +299,30 @@
             // Return a copy of the model's "attributes" object
         ,   toJSON: function() {
                 return $.extend( {}, this.attributes );
+            }
+
+            // Parse a router string setting the respective values of named 
+            // variables based on model attributes.
+            // 
+            //      var route = this.buildRequestUrl( 'user/:id/statuses/:page' );
+            // 
+        ,   buildRequestUrl: function( route ) {
+
+                var varName, modelVar, _this = this
+                ,   route;
+
+                route = route.replace( namedParam, function( match, optional ) {
+                            
+                    // Loop through each name variable getting value from model
+                    varName = match.replace( ':', '' );
+                    modelVar = _this.get( varName );
+
+                    return optional ? match : modelVar || match;
+                }); 
+
+                return this.baseUrl ? this.baseUrl + route :
+                    window.location.href + '/' + route;
+
             }
 
     });
