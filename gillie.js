@@ -227,19 +227,30 @@
         }
 
         // Set new attributes
-        // this.set( attrs );
+        // 
+        //      this.set( attrs );
+        // 
         this.attributes = attrs;
         if ( this.initialize ) this.initialize();
 
-    };
+        }
+
+    // Cached regular expressions for matching named param parts and splatted
+    // parts of route strings.
+    // Adapted from https://github.com/jashkenas/backbone/blob/master/backbone.js#L1219
+    ,   namedParam    = /(\(\?)?:\w+/g
+
+    // Cached regexp for removing a trailing slash.
+    ,   trailingSlash = /\/$/;
+
 
     _extend( Model.prototype, Events, {
 
 
             // Set one attribute or several attributes, on the model.
             //
-            // Setting attributes in a model instance.
-            // model.set({ foo: 1, bar: 2 });
+            //      // Setting attributes in a model instance.
+            //      model.set({ foo: 1, bar: 2 });
             //
             set: function( key, val, options ) {
                 var attr,  attrs, current, unset;
@@ -268,7 +279,7 @@
                 for ( attr in attrs ) {
                     val = attrs[ attr ];
 
-                    // Allways update the attribute.
+                    // Always update the attribute.
                     unset ? delete current[ attr ] : current[ attr ] = val;
                 }
 
@@ -276,7 +287,7 @@
 
             }
 
-            // Backbone's "get", which get the value of an ottribute.
+            // Backbone's "get", which get the value of an attribute.
         ,   get: function( attr ) {
                 return this.attributes[ attr ];
             }
@@ -291,7 +302,82 @@
                 return $.extend( {}, this.attributes );
             }
 
+            // Parse a router string setting the respective values of named 
+            // variables based on model attributes.
+            // 
+            //      var route = this.buildRequestUrl( 'user/:id/statuses/:page' );
+            // 
+        ,   buildRequestUrl: function( route ) {
+
+                var varName, modelVar, _this = this
+                ,   route;
+
+                route = route.replace( namedParam, function( match, optional ) {
+                            
+                    // Loop through each name variable getting value from model
+                    varName = match.replace( ':', '' );
+                    modelVar = _this.get( varName );
+
+                    return optional ? match : modelVar || match;
+                }); 
+
+                return this.url ? this.url + route :
+                    window.location.href + '/' + route;
+
+            }
+
+            // Proxy to `Gillie.sync` by default
+        ,   sync: function() {
+                return Gillie.sync.apply( this, arguments );
+            }
+
     });
+
+    // Request wrappers that will be implements on model
+    var methodsAlias = [ 
+                [ 'get', 'read' ], [ 'post', 'create' ]
+            ,   [ 'put', 'update' ], [ 'delete', 'delete' ]
+            ,   [ 'patch', 'patch' ] 
+        ]
+    ,   requestMethods = {};
+        
+    // Create each method in the `requestMethods` object so that we can
+    // extend the model with it.
+    $.each( methodsAlias , function( k, v ) {
+
+        // Request methods
+        //
+        //      // Make a post request to the specified path with named
+        //      // variables, in this case `:query` and `:page` which match model attributes.
+        //
+        //      // Note that each request takes `model.url` as the base for the AJAX URL
+        //      // and when it isn't present, uses `window.location.href` as base URL.
+        //      model.post( 'search/:query/:page', 'custom_event', options );
+        //
+        requestMethods[ v[ 0 ] ] = function( path, event, options ) {
+
+                var xhr, model = this
+                ,   success = options.success;
+
+                // Default success function
+                options.success = function( resp ) {
+
+                    // Call passed "success" function if specified.
+                    if ( success ) success( model, resp, options );
+                    model.trigger( event, model, resp, options );
+                }
+
+                // Add path to the base URL.
+                options.url = this.buildRequestUrl( path );
+
+                xhr = this.sync( v[ 1 ], this, options );
+                return xhr;
+
+            }
+    });
+
+    // Add request methods to model
+    _extend( Model.prototype, requestMethods );
 
 
     // Gillie.View
@@ -300,6 +386,62 @@
     // are triggered, views print the new data, of show feedback, etc.
     var View = Gillie.View = Controller;
 
+    // Gillie.sync
+    // 
+    Gillie.sync = function( method, model, options ) {
+
+        var type = methodMap[ method ];
+
+        // Default JSON-request options
+        var params = { type: type, dataType: 'json' };
+
+        // Make sure we have an URL.
+        if ( ! options.url ) {
+            params.url = model.url;
+        }
+
+        // Ensure that we have the appropriate data
+        if ( options.data == null && model && ( method === 'create' || method === 'update' || method === 'patch' ) ) {
+            params.contentType = 'application/json';
+            params.data = JSON.stringify( options.attrs || model.toJSON() );
+        }
+
+        // Don't process data on a non-GET request.
+        if ( params.type !== 'GET' ) {
+            params.processData = false;
+        }
+
+        // If we're sending a `PATCH` request and we're in an old Internet Explorer browser
+        // that still has ActiveX enabled by default, override jQuery or Zepto to use that
+        // for XHR instead.
+        if ( params.type === 'PATCH' && noXhrPatch ) {
+            params.xhr = function() {
+                return new ActiveXObject( "Microsoft.XMLHTTP" );
+            }
+        }
+
+        // Make the request, allowing the user to override any AJAX options.
+        var xhr = options.xhr = Gillie.ajax( $.extend( params, options ) );
+        model.trigger( 'request', model, xhr, options );
+        return xhr;
+
+    }   
+
+    var noXhrPatch = typeof window !== 'undefined' && !! window.ActiveXObject && !( window.XMLHttpRequest && ( new XMLHttpRequest ).dispatchEvent )
+
+    // Map from CRUD to HTTP for our default `Gillie.Model.sync` implementation
+    ,   methodMap = {
+            'create': 'POST'
+        ,   'update': 'PUT'
+        ,   'patch': 'PATCH'
+        ,   'delete': 'DELETE'
+        ,   'read': 'GET'
+    };
+
+    // Set the default implementation of `Gillie.ajax` to proxy through to `$`.
+    Gillie.ajax = function() {
+        return $.ajax.apply( $, arguments );
+    };
 
     // Helpers
     var extend = function( prop ) {
@@ -358,7 +500,7 @@
         return Gillie;
     };
 
-    // Generate a unique intener id ( unique within the entire client session ).
+    // Generate a unique integer id ( unique within the entire client session ).
     // Useful for temporary DOM ids
     var idCounter = 0
 
@@ -369,7 +511,7 @@
 
 
 
-    // Make Handler, Model, View and Controller be extendible
+    // Make Handler, Model, View and Controller be extensible
     Gillie.Handler.extend = Gillie.Model.extend = Gillie.Controller.extend = Gillie.View.extend = extend;
 
 
