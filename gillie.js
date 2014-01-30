@@ -335,9 +335,9 @@
 
     // Request wrappers that will be implements on model
     var methodsAlias = [ 
-                [ 'get', 'read' ], [ 'post', 'create' ]
-            ,   [ 'put', 'update' ], [ 'delete', 'delete' ]
-            ,   [ 'patch', 'patch' ] 
+                [ '_get', 'read' ], [ '_post', 'create' ]
+            ,   [ '_put', 'update' ], [ '_delete', 'delete' ]
+            ,   [ '_patch', 'patch' ] 
         ]
     ,   requestMethods = {};
         
@@ -352,7 +352,7 @@
         //
         //      // Note that each request takes `model.url` as the base for the AJAX URL
         //      // and when it isn't present, uses `window.location.href` as base URL.
-        //      model.post( 'search/:query/:page', 'custom_event', options );
+        //      model._post( 'search/:query/:page', 'custom_event', options );
         //
         requestMethods[ v[ 0 ] ] = function( path, event, options ) {
 
