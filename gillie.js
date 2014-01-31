@@ -233,7 +233,7 @@
         this.attributes = attrs;
         if ( this.initialize ) this.initialize();
 
-        }
+    }
 
     // Cached regular expressions for matching named param parts and splatted
     // parts of route strings.
@@ -335,9 +335,9 @@
 
     // Request wrappers that will be implements on model
     var methodsAlias = [ 
-                [ '_get', 'read' ], [ '_post', 'create' ]
-            ,   [ '_put', 'update' ], [ '_delete', 'delete' ]
-            ,   [ '_patch', 'patch' ] 
+                [ 'Get', 'read' ], [ 'Post', 'create' ]
+            ,   [ 'Put', 'update' ], [ 'Delete', 'delete' ]
+            ,   [ 'Patch', 'patch' ] 
         ]
     ,   requestMethods = {};
         
