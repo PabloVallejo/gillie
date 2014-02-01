@@ -1,5 +1,5 @@
 /**
-* Gillie 0.1.3
+* Gillie 0.1.4
 * Micro Framework
 *
 * MIT Licensed.
@@ -199,20 +199,6 @@
     });
 
 
-    // Gillie.Controller
-    // Controllers are intended to handle the application main logic,
-    // that is, handler methods call controller methods passing them data
-    // from the DOM, then controller decides what to do with that data,
-    // whether to send it to the server via the model, or just to process it
-    // and send it to a view etc.
-    var Controller = Gillie.Controller = function( options ) {
-
-        if ( this.initialize ) this.initialize();
-    }
-
-    _extend( Controller.prototype, Events );
-
-
     // Gillie.Model
     // Models take care of talking to the server by making AJAX requests
     // and then triggering events so that views that are listening to them
@@ -356,6 +342,7 @@
         //
         requestMethods[ v[ 0 ] ] = function( path, event, options ) {
 
+                options = options ? options : {};
                 var xhr, model = this
                 ,   success = options.success;
 
@@ -384,7 +371,13 @@
     // In Gillie, views are taken care of affecting DOM elements,
     // that means, they subscribe to models events, when these events
     // are triggered, views print the new data, of show feedback, etc.
-    var View = Gillie.View = Controller;
+    var View = Gillie.View = function( options ) {
+
+        if ( this.initialize ) this.initialize();
+    }
+
+    _extend( View.prototype, Events );
+
 
     // Gillie.sync
     // 
@@ -512,7 +505,7 @@
 
 
     // Make Handler, Model, View and Controller be extensible
-    Gillie.Handler.extend = Gillie.Model.extend = Gillie.Controller.extend = Gillie.View.extend = extend;
+    Gillie.Handler.extend = Gillie.Model.extend = Gillie.View.extend = extend;
 
 
     // Expose Gillie to the global scope

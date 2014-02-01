@@ -1,7 +1,7 @@
 Gillie - JavaScript MicroFramework
 =======
 
-Gillie is a JavaScript micro-framework that lets you easily structure your app using `models`, `views`, `controllers` and `handlers`. Gillie the things from Backbone, jQuery and Underscore, it is very easy to set up and it's only dependency is jQuery.
+Gillie is a JavaScript micro-framework that lets you easily structure your app using `models`, `views` and `handlers`. Gillie takes things from Backbone, jQuery and Underscore, it is very easy to set up and it's only dependency is jQuery.
 
 ## Quick start
 
@@ -16,7 +16,7 @@ Include jQuery, Gillie and your app scripts.
 
 ## Overview
 
-Gillie follows a `handler-model-view-controller` architecture in order to group app sections.
+Gillie follows a `handler-model-view` architecture in order to group app sections.
 
 ## Basic Usage
 
