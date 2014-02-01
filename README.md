@@ -1,11 +1,11 @@
 Gillie - JavaScript MicroFramework
 =======
 
-Gillie is a JavaScript micro-framework that lets you easily create classes to better organize your app. Gillie can as well serve as an introductory framework to learn Backbone, given its similarities with a Backbone view. On the other hand Gillie is very easy to setup and only requires jQuery.
+Gillie is a JavaScript micro-framework that lets you easily structure your app using `models`, `views`, `controllers` and `handlers`. Gillie the things from Backbone, jQuery and Underscore, it is very easy to set up and it's only dependency is jQuery.
 
 ## Quick start
 
-Download Giliie and include jQuery, Gillie and you app scripts.
+Include jQuery, Gillie and your app scripts.
 
 ```html
 
@@ -14,50 +14,103 @@ Download Giliie and include jQuery, Gillie and you app scripts.
 <script src="js/yourapp.js"></script>
 ```
 
+## Overview
+
+Gillie follows a `handler-model-view-controller` architecture in order to group app sections.
+
 ## Basic Usage
 
-To get started, just create a class as shown in this example, and then, create an instance of it.
+This example illustrates how to get user data and persist it on the server side in a RESTful way.
+
+  - Model
+
 
 ```js
+// User model 
+var UserModel = Gillie.Model.extend({
+        
+        // Defualt attributes
+        defaults: {
+                id: 0
+            ,   email: ''
+            ,   name: ''
+        } 
+    
+        // Base URL
+    ,   url: 'http://localhost/PHP/laravel/public/api/v1/'
 
-var View = Gillie.extend({
+        // Save user
+    ,   save: function() {
+                
+            // Make a "POST" request passing the actual user's "id", save it
+            // and trigger "user.save" event on success.
+            this.Put( 'users/:id', 'user.update' );
+        }      
+});
+
+var userModel = new UserModel();
+```
+
+- Handler
+
+```js
+// User handler
+var UserHandler = Gillie.Handler.extend({
 
         // Element to bind from
-    ,   el: '.wrapper'
-
-        // Method fired after instantiation
-    ,   initialize: function() {
-            console.log( 'Initialize' );
-        }
+        el: 'body'
 
         // Bind events to elements
     ,   events: {
-            '.my-link': handleClick
+            'click .update-user': 'updateUser'
         }
 
-        // Click callback
-    ,   handleClick: function( e ) {
+    ,   updateUser: function( e ) {
             e.preventDefault;
-
-            // Change background color in the clicked element
-            $( e.currentTarget ).css( 'background', 'red' );
+                
+            var email = $( '.user-email' ).val()
+            ,   id = $( '.user-id' ).val()
+            ,   name = $( '.user-name' ).val();
+    
+            // Set user attributes on model and save
+            userModel.set({
+                    id: id
+                ,   email: email
+                ,   name: name
+            }).save();
 
         }
 
 });
 
-// Instantiate the class
-var app = new View();
+// Instantiate handler
+var userHandler = new UserHandler();
 
 ```
 
-## Live Examples
+   - View
 
-You can refer to the examples put together in codePen.
+```js
+// View
+var UserView = Gillie.Model.extend({
+        
+        initialize: function() {
+            
+            // Bind to user save event
+            userModel.on( 'user.update', this.showNotification );
+        }
+        
+        // Show an alert after user is saved
+    ,   showNotification: function( model, response ) {
 
-- [Binding events](http://codepen.io/PabloVallejo/pen/fhHuC)
-- [Getting data attributes](http://codepen.io/PabloVallejo/pen/rIbiE)
+            var name = model.get( 'name' );
+            alert( 'Howdy ' + name + ' your account has been updated.' );
+        }
 
+});
+
+var userView = new UserView();
+```
 
 ## Contributing
 
