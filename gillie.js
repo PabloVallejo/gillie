@@ -1,9 +1,9 @@
 /**
-* Gillie 0.1.4
-* Micro Framework
+* Gillie 0.2.0
+* JavaScript MVC Micro Framework
 *
 * MIT Licensed.
-* (c) 2013, Pablo Vallejo - https://PabloVallejo.github.io/gillie
+* (c) 2014, Pablo Vallejo - https://PabloVallejo.github.io/gillie
 *
 * Based on Simple JavaScript Inheritance by John Resig, Backbone, jQuery and Underscore.
 */
@@ -12,7 +12,7 @@
     var
 
         // Gillie version
-        version = '0.3'
+        version = '0.2.0'
 
     ,   initializing = false
     ,   fnTest = /xyz/.test( function(){ xyz; }) ? /\b_super\b/ : /.*/
@@ -213,9 +213,9 @@
         }
 
         // Set new attributes
-        // 
+        //
         //      this.set( attrs );
-        // 
+        //
         this.attributes = attrs;
         if ( this.initialize ) this.initialize();
 
@@ -288,24 +288,24 @@
                 return $.extend( {}, this.attributes );
             }
 
-            // Parse a router string setting the respective values of named 
+            // Parse a router string setting the respective values of named
             // variables based on model attributes.
-            // 
+            //
             //      var route = this.buildRequestUrl( 'user/:id/statuses/:page' );
-            // 
+            //
         ,   buildRequestUrl: function( route ) {
 
                 var varName, modelVar, _this = this
                 ,   route;
 
                 route = route.replace( namedParam, function( match, optional ) {
-                            
+
                     // Loop through each name variable getting value from model
                     varName = match.replace( ':', '' );
                     modelVar = _this.get( varName );
 
                     return optional ? match : modelVar || match;
-                }); 
+                });
 
                 return this.url ? this.url + route :
                     window.location.href + '/' + route;
@@ -320,13 +320,13 @@
     });
 
     // Request wrappers that will be implements on model
-    var methodsAlias = [ 
+    var methodsAlias = [
                 [ 'Get', 'read' ], [ 'Post', 'create' ]
             ,   [ 'Put', 'update' ], [ 'Delete', 'delete' ]
-            ,   [ 'Patch', 'patch' ] 
+            ,   [ 'Patch', 'patch' ]
         ]
     ,   requestMethods = {};
-        
+
     // Create each method in the `requestMethods` object so that we can
     // extend the model with it.
     $.each( methodsAlias , function( k, v ) {
@@ -380,7 +380,7 @@
 
 
     // Gillie.sync
-    // 
+    //
     Gillie.sync = function( method, model, options ) {
 
         var type = methodMap[ method ];
@@ -418,7 +418,7 @@
         model.trigger( 'request', model, xhr, options );
         return xhr;
 
-    }   
+    }
 
     var noXhrPatch = typeof window !== 'undefined' && !! window.ActiveXObject && !( window.XMLHttpRequest && ( new XMLHttpRequest ).dispatchEvent )
 
