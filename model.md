@@ -504,4 +504,4 @@ console.log( attributes ); // { year: 2014, manufacturer: 'Chevrolet' }
 
 ## Events
 
-As well as the `views`, `models` can triger and listen for events. To take a look at how events work, go to [events API](/events)
+As well as the `views`, `models` can triger and listen for events. To take a look at how events work, go to [events API](http://pablovallejo.github.io/gillie/events)
