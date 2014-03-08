@@ -1,78 +1,283 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>Guillie by PabloVallejo</title>
-    <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-    <script src="javascripts/respond.js"></script>
-    <!--[if lt IE 9]>
-      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-    <!--[if lt IE 8]>
-    <link rel="stylesheet" href="stylesheets/ie.css">
-    <![endif]-->
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
 
-  </head>
-  <body>
-      <div id="header">
-        <nav>
-          <li class="fork"><a href="https://github.com/PabloVallejo/guillie">View On GitHub</a></li>
-          <li class="downloads"><a href="https://github.com/PabloVallejo/guillie/zipball/master">ZIP</a></li>
-          <li class="downloads"><a href="https://github.com/PabloVallejo/guillie/tarball/master">TAR</a></li>
-          <li class="title">DOWNLOADS</li>
-        </nav>
-      </div><!-- end header -->
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
 
-    <div class="wrapper">
+  <title>
+    
+      Gillie &middot; A 4k JavaScript micro framework inspired in Backbone
+    
+  </title>
 
-      <section>
-        <div id="title">
-          <h1>Guillie</h1>
-          <p>Javascript Microframework inspired in BackboneJS</p>
-          <hr>
-          <span class="credits left">Project maintained by <a href="https://github.com/PabloVallejo">PabloVallejo</a></span>
-          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="http://twitter.com/#!/michigangraham">mattgraham</a></span>
-        </div>
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/bootstrap.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
 
-        <h3>Welcome to GitHub Pages.</h3>
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
 
-<p>This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here using GitHub Flavored Markdown, select a template crafted by a designer, and publish. After your page is generated, you can check out the new branch:</p>
 
-<div class="hightlight">
+  <body class="theme-base-0g">
 
-    <pre>
-        var a = function() {
-          console.log( "dummy" );
-        }
-    </pre>
+    <div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>Gillie</h1>
+      <p class="lead">A 4K JavaScript micro framework inspired in <a href="http://backbonejs.org">Backbone</a></p>
+      <p>
+        <iframe src="http://ghbtns.com/github-btn.html?user=PabloVallejo&repo=gillie&type=watch"
+  allowtransparency="true" frameborder="0" scrolling="0" width="60" height="20"></iframe>
+  <iframe src="http://ghbtns.com/github-btn.html?user=PabloVallejo&repo=gillie&type=fork"
+  allowtransparency="true" frameborder="0" scrolling="0" width="60" height="20"></iframe>
 
+
+<a href="https://twitter.com/share" class="twitter-share-button" data-text="Gillie · A 4k JavaScript micro framework inspired in Backbone" data-via="PabloVallejo_" data-count="none">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+      </p>
+    </div>
+
+    <ul class="sidebar-nav">
+
+      <!-- Handler -->
+      <li>
+
+        <a href="/handler">Handler</a>
+        <ul class="sidebar-nav-sub  show ">
+          <li><a href="/handler/#initialize">Initialize</a></li>
+          <li><a href="/handler/#el">el</a></li>
+          <li><a href="/handler/#events">events</a></li>
+        </ul>
+      </li>
+
+      <!-- Model -->
+      <li>
+        <a href="/model">Model</a>
+        <ul class="sidebar-nav-sub  hide ">
+          <li><a href="/model/#initialize">initialize</a></li>
+          <li><a href="/model/#defaults">defaults</a></li>
+          <li><a href="/model/#url">url</a></li>
+          <li><a href="/model/#request-methods">AJAX Methods</a></li>
+          <li><a href="/model/#get">get</a></li>
+          <li><a href="/model/#set">set</a></li>
+          <li><a href="/model/#unset">unset</a></li>
+          <li><a href="/model/#toJSON">toJSON</a></li>
+        </ul>
+      </li>
+
+      <!-- View -->
+      <li>
+        <a href="/view">View</a>
+        <ul class="sidebar-nav-sub  hide ">
+          <li><a href="/view/#initialize">Initialize</a></li>
+        </ul>
+      </li>
+
+      <!-- Events -->
+      <li>
+        <a href="/events">Events</a>
+        <ul class="sidebar-nav-sub  hide ">
+          <li><a href="/events/#on">on</a></li>
+          <li><a href="/events/#trigger">trigger</a></li>
+          <li><a href="/events/#listen-to">listen to</a></li>
+        </ul>
+      </li>
+
+
+    </ul>
+
+    <p>&copy; 2014 <a href="http://github.com/PabloVallejo">Pablo Vallejo</a> under the terms of <a href="https://github.com/PabloVallejo/gillie/blob/master/LICENSE">MIT License</a>.</p>
+  </div>
 </div>
 
-<p>If you're using the GitHub for Mac, simply sync your repository and you'll see the new branch.</p>
 
-<h3>Designer Templates</h3>
+    <div class="content container">
+      <div class="posts">
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2014/03/06/gillie-javascript-mvc-microframework/">
+        Gillie, JavaScript MVC micro framework inspired in Backbone
+      </a>
+    </h1>
 
-<p>We've crafted some handsome templates for you to use. Go ahead and continue to layouts to browse through them. You can easily go back to edit your page before publishing. After publishing your page, you can revisit the page generator and switch to another theme. Your Page content will be preserved if it remained markdown format.</p>
+    <span class="post-date">06 Mar 2014</span>
 
-<h3>Rather Drive Stick?</h3>
+    <p>Gillie is a lightweight MVC framework inspired in <a href="http://backbonejs.org">Backbone</a>. It provides useful methods to perform RESTful HTTP requests and allows for a separation of concerns using <a href="/model">models</a>, <a href="/view">views</a> and <a href="/handler">handlers</a>. On the other hand offers an <a href="/events">events</a> API with which you can make your views listen for model events and take the appropriate actions, following in that way the <a href="http://addyosmani.com/resources/essentialjsdesignpatterns/book/#observerpatternjavascript">observer</a> design pattern.</p>
 
-<p>If you prefer to not use the automatic generator, push a branch named <code>gh-pages</code> to your repository to create a page manually. In addition to supporting regular HTML content, GitHub Pages support Jekyll, a simple, blog aware static site generator written by our own Tom Preston-Werner. Jekyll makes it easy to create site-wide headers and footers without having to copy them across every page. It also offers intelligent blog support and other advanced templating features.</p>
+<p><strong>Get the code</strong></p>
 
-<h3>Authors and Contributors</h3>
+<p><a href="/dist/gillie.js" class="btn btn-success">Development version (0.2)</a> <small><em>16 k</em></small></p>
 
-<p>You can <a href="https://github.com/blog/821" class="user-mention">@mention</a> a GitHub username to generate a link to their profile. The resulting <code>&lt;a&gt;</code> element will link to the contributor's GitHub Profile. For example: In 2007, Chris Wanstrath (<a href="https://github.com/defunkt" class="user-mention">@defunkt</a>), PJ Hyett (<a href="https://github.com/pjhyett" class="user-mention">@pjhyett</a>), and Tom Preston-Werner (<a href="https://github.com/mojombo" class="user-mention">@mojombo</a>) founded GitHub.</p>
+<p><a href="/dist/gillie.min.js" class="btn btn-primary">Production version (0.2)</a>
+<small><em>4 K</em></small></p>
 
-<h3>Support or Contact</h3>
+<hr>
 
-<p>Having trouble with Pages? Check out the documentation at <a href="http://help.github.com/pages">http://help.github.com/pages</a> or contact <a href="mailto:support@github.com">support@github.com</a> and we’ll help you sort it out.</p>
-      </section>
+<h3>Structuring your app</h3>
+
+<p>Gillie follows an MVC design, however, the controller is called handler. The idea behind the handler is to listen for DOM events, get their data, and pass it to the model to save it. Once the model finishes saving the data, will trigger an event that usually the view was listening for in order to repaint the DOM.</p>
+
+<p><img src="/public/images/mvc.jpg" alt="Structure"></p>
+
+<h3>Philosophy</h3>
+
+<p>The objective of Gillie is to make it easy for people to get used to JavaScript design patterns and to grasp a basic understanding of MV* in the browser for them to feel comfortable when using other libraries like <a href="http://backbonejs.org">Backbone</a>, <a href="http://angularjs.org/">AngularJS</a>, <a href="http://emberjs.com/">EmberJS</a> and the like.</p>
+
+<h3>Hello world</h3>
+
+<div class="highlight"><pre><code class="js"><span class="kd">var</span> <span class="nx">MainHandler</span> <span class="o">=</span> <span class="nx">Gillie</span><span class="p">.</span><span class="nx">Handler</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span>
+
+    <span class="nx">initialize</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+        <span class="nx">alert</span><span class="p">(</span> <span class="s1">&#39;Hello world!&#39;</span> <span class="p">);</span>
+    <span class="p">}</span>
+
+<span class="p">});</span>
+
+<span class="c1">// Instantiate handler</span>
+<span class="kd">var</span> <span class="nx">mainHandler</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">MainHandler</span><span class="p">();</span>
+</code></pre></div>
+
+<h3>DOM Events</h3>
+
+<div class="highlight"><pre><code class="js"><span class="kd">var</span> <span class="nx">AppHandler</span> <span class="o">=</span> <span class="nx">Gillie</span><span class="p">.</span><span class="nx">Handler</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span>
+
+        <span class="nx">events</span><span class="o">:</span> <span class="p">{</span>
+            <span class="s1">&#39;click a&#39;</span><span class="o">:</span> <span class="s1">&#39;turnRed&#39;</span>
+        <span class="p">}</span>
+
+    <span class="p">,</span>   <span class="nx">turnRed</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span> <span class="nx">e</span> <span class="p">)</span> <span class="p">{</span>
+            <span class="nx">e</span><span class="p">.</span><span class="nx">preventDefault</span><span class="p">();</span>
+
+            <span class="kd">var</span> <span class="nx">target</span> <span class="o">=</span> <span class="nx">e</span><span class="p">.</span><span class="nx">currentTarget</span><span class="p">;</span>
+            <span class="nx">$</span><span class="p">(</span> <span class="nx">target</span> <span class="p">).</span><span class="nx">css</span><span class="p">(</span> <span class="s1">&#39;color&#39;</span><span class="p">,</span> <span class="s1">&#39;red&#39;</span> <span class="p">);</span>
+
+        <span class="p">}</span>
+<span class="p">});</span>
+
+<span class="c1">// Instantiate handler</span>
+<span class="kd">var</span> <span class="nx">appHandler</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">AppHandler</span><span class="p">();</span>
+</code></pre></div>
+
+<h3>Saving data in the server</h3>
+
+<blockquote>
+<p>Model</p>
+</blockquote>
+
+<p>When <code>Post</code> finishes with the request, it will trigger the <code>event</code> in the model passing an instance and the server&#39;s response to listeners.</p>
+
+<div class="highlight"><pre><code class="js"><span class="kd">var</span> <span class="nx">TodoModel</span> <span class="o">=</span> <span class="nx">Gillie</span><span class="p">.</span><span class="nx">Handler</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span>
+
+    <span class="nx">url</span><span class="o">:</span> <span class="s1">&#39;http://localhost/api/&#39;</span>
+
+    <span class="nx">create</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span> <span class="nx">event</span> <span class="p">)</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">Post</span><span class="p">(</span> <span class="s1">&#39;todo/&#39;</span><span class="p">,</span> <span class="nx">event</span> <span class="p">);</span>
+    <span class="p">}</span>
+
+<span class="p">});</span>
+
+<span class="c1">// Crete model instance</span>
+<span class="kd">var</span> <span class="nx">todoModel</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">TodoModel</span><span class="p">();</span>
+</code></pre></div>
+
+<blockquote>
+<p>View</p>
+</blockquote>
+
+<div class="highlight"><pre><code class="js"><span class="kd">var</span> <span class="nx">TodoView</span> <span class="o">=</span> <span class="nx">Gillie</span><span class="p">.</span><span class="nx">View</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span>
+
+        <span class="nx">initialize</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+
+            <span class="c1">// Bind to &#39;todo.create&#39; event</span>
+            <span class="nx">todoModel</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span> <span class="s1">&#39;todo.create&#39;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">onCreate</span> <span class="p">);</span>
+        <span class="p">}</span>
+
+
+    <span class="p">,</span>   <span class="nx">onCreate</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span> <span class="nx">instance</span><span class="p">,</span> <span class="nx">response</span> <span class="p">)</span> <span class="p">{</span>
+            <span class="nx">alert</span><span class="p">(</span> <span class="nx">instance</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span> <span class="s1">&#39;title&#39;</span> <span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;. Has been saved&#39;</span> <span class="p">);</span>
+        <span class="p">}</span>
+
+<span class="p">});</span>
+
+<span class="c1">// Create view instance</span>
+<span class="kd">var</span> <span class="nx">todoView</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">TodoView</span><span class="p">();</span>
+</code></pre></div>
+
+<blockquote>
+<p>Handler</p>
+</blockquote>
+
+<div class="highlight"><pre><code class="js"><span class="kd">var</span> <span class="nx">TodoHandler</span> <span class="o">=</span> <span class="nx">Gillie</span><span class="p">.</span><span class="nx">Handler</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span>
+
+        <span class="nx">events</span><span class="o">:</span> <span class="p">{</span>
+            <span class="s1">&#39;keypress #new-todo&#39;</span><span class="o">:</span> <span class="s1">&#39;createOnEnter&#39;</span>
+        <span class="p">}</span>
+
+    <span class="p">,</span>   <span class="nx">createOnEnter</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span> <span class="nx">e</span> <span class="p">)</span> <span class="p">{</span>
+
+            <span class="kd">var</span> <span class="nx">enterKey</span> <span class="o">=</span> <span class="mi">13</span>
+            <span class="p">,</span>   <span class="nx">currentTarget</span> <span class="o">=</span> <span class="nx">e</span><span class="p">.</span><span class="nx">currentTarget</span><span class="p">;</span>
+
+            <span class="k">if</span> <span class="p">(</span> <span class="nx">e</span><span class="p">.</span><span class="nx">which</span> <span class="o">!=</span> <span class="nx">enterKey</span> <span class="p">)</span> <span class="k">return</span><span class="p">;</span>
+
+            <span class="kd">var</span> <span class="nx">title</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span> <span class="nx">target</span> <span class="p">).</span><span class="nx">val</span><span class="p">();</span>
+            <span class="nx">todoModel</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span> <span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="nx">title</span> <span class="p">)</span>
+                <span class="p">.</span><span class="nx">create</span><span class="p">(</span> <span class="s1">&#39;todo.create&#39;</span> <span class="p">);</span>
+
+        <span class="p">}</span>
+<span class="p">});</span>
+
+<span class="c1">// Create handler instance</span>
+<span class="kd">var</span> <span class="nx">todoHandler</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">TodoHandler</span><span class="p">();</span>
+</code></pre></div>
+
+<h3>History</h3>
+
+<p>We were working in a JavaScript project that had a large codebase, at the same time I was learning Backbone on my own, and was fascinated with it, one day I thought that it would be nice to use Backbone in our project, so that we could take advantage of its features.</p>
+
+<p>Even though we were separating concerns on the project,
+we decided not no implement Backbone until we learned more about how to use it. Instead we decided to create a small library which would have some Backbone features to start moving the project towards the architecture it suggests. Eventually we added enough functionality to the library until the point we decided to stick with it.</p>
+
+<p>It is in this way that Gillie was born.</p>
+
+<h3>Usage</h3>
+
+<div class="highlight"><pre><code class="html"><span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;js/jquery.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+<span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;js/gillie.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+<span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;js/yourapp.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+</code></pre></div>
+
+<h3>Credits</h3>
+
+<p>Gillie class structure is based on <a href="http://ejohn.org/blog/simple-javascript-inheritance/">Simple class inheritance</a> by <a href="http://ejohn.org/">John Resig</a>. Events API, DOM events declaration and models have been adapted from <a href="http://backbonejs.org">Backbone</a>.</p>
+
+<p>The documentation template is based on <a href="https://github.com/poole/hyde">hyde</a> by <a href="https://twitter.com/mdo">Mark Otto</a>.</p>
+
+<p>Thank to <a href="http://addyosmani.com/">Addy Osmany</a> for his great book on <a href="http://addyosmani.com/resources/essentialjsdesignpatterns/book/">JavaScript Design Patters</a> which was very useful for this project.</p>
+
+  </div>
+  
+</div>
 
     </div>
-    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
 
+	<script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+          })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-36974472-3', 'pablovallejo.github.io');
+        ga('send', 'pageview');
+    </script>
   </body>
 </html>

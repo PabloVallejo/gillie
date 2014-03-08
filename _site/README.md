@@ -1,4 +1,3 @@
-guillie
-=======
+# Gillie
 
-Javascript Microframework inspired in BackboneJS
+Gillie JavaScript microframework documentation.

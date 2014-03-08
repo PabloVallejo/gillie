@@ -1,0 +1,69 @@
+<div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>{{ site.title }}</h1>
+      <p class="lead">{{ site.description }}</p>
+      <p>
+        <iframe src="http://ghbtns.com/github-btn.html?user=PabloVallejo&repo=gillie&type=watch"
+  allowtransparency="true" frameborder="0" scrolling="0" width="60" height="20"></iframe>
+  <iframe src="http://ghbtns.com/github-btn.html?user=PabloVallejo&repo=gillie&type=fork"
+  allowtransparency="true" frameborder="0" scrolling="0" width="60" height="20"></iframe>
+
+
+<a href="https://twitter.com/share" class="twitter-share-button" data-text="Gillie · A 4k JavaScript micro framework inspired in Backbone" data-via="PabloVallejo_" data-count="none">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+      </p>
+    </div>
+
+    <ul class="sidebar-nav">
+
+      <!-- Handler -->
+      <li>
+
+        <a href="/handler">Handler</a>
+        <ul class="sidebar-nav-sub {% if page.title == "Home" or page.title == "Handler API reference" %} show {% else %} hide {% endif %}">
+          <li><a href="/handler/#initialize">Initialize</a></li>
+          <li><a href="/handler/#el">el</a></li>
+          <li><a href="/handler/#events">events</a></li>
+        </ul>
+      </li>
+
+      <!-- Model -->
+      <li>
+        <a href="/model">Model</a>
+        <ul class="sidebar-nav-sub {% if page.title == "Model API reference" %} show {% else %} hide {% endif %}">
+          <li><a href="/model/#initialize">initialize</a></li>
+          <li><a href="/model/#defaults">defaults</a></li>
+          <li><a href="/model/#url">url</a></li>
+          <li><a href="/model/#request-methods">AJAX Methods</a></li>
+          <li><a href="/model/#get">get</a></li>
+          <li><a href="/model/#set">set</a></li>
+          <li><a href="/model/#unset">unset</a></li>
+          <li><a href="/model/#toJSON">toJSON</a></li>
+        </ul>
+      </li>
+
+      <!-- View -->
+      <li>
+        <a href="/view">View</a>
+        <ul class="sidebar-nav-sub {% if page.title == "View API reference" %} show {% else %} hide {% endif %}">
+          <li><a href="/view/#initialize">Initialize</a></li>
+        </ul>
+      </li>
+
+      <!-- Events -->
+      <li>
+        <a href="/events">Events</a>
+        <ul class="sidebar-nav-sub {% if page.title == "Events API reference" %} show {% else %} hide {% endif %}">
+          <li><a href="/events/#on">on</a></li>
+          <li><a href="/events/#trigger">trigger</a></li>
+          <li><a href="/events/#listen-to">listen to</a></li>
+        </ul>
+      </li>
+
+
+    </ul>
+
+    <p>&copy; {{ site.time | date: '%Y' }} <a href="http://github.com/PabloVallejo">Pablo Vallejo</a> under the terms of <a href="https://github.com/PabloVallejo/gillie/blob/master/LICENSE">MIT License</a>.</p>
+  </div>
+</div>

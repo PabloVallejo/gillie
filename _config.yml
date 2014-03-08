@@ -1,0 +1,53 @@
+# Dependencies
+markdown:         redcarpet
+pygments:         true
+
+# Permalinks
+permalink:        pretty
+
+# Setup
+title:            Gillie
+tagline:          'A 4k JavaScript micro framework inspired in Backbone'
+description:      'A 4K JavaScript micro framework inspired in <a href="http://backbonejs.org">Backbone</a>'
+url:              http://hyde.getpoole.com
+
+author:
+  name:           'Mark Otto'
+  url:            https://twitter.com/mdo
+
+paginate:         1
+
+# Custom vars
+version:          2.0.0
+
+github:
+  repo:           https://github.com/poole/hyde
+
+### Documentation
+
+# Models
+docs_tree:
+
+    # Models
+    model:
+        basic_usage:
+            name: 'Basic usage'
+            url: '//model-basic-usage'
+
+        # initialize:
+        #     name: 'Initialize'
+        #     url: '//model#initialize'
+
+        # defaults:
+        #     name: 'URL'
+        #     url: '//model#URL'
+
+        # request_methods:
+        #     name: 'Request methods'
+        #     url: '//model#request-methods'
+
+    # View
+    view:
+        basic_usage:
+            name: 'Basic usage'
+            url: '//view-basic-usage'
