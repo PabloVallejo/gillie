@@ -20,7 +20,7 @@ Gillie is a lightweight MVC framework inspired in [Backbone](http://backbonejs.o
 Gillie follows an MVC design, however, the controller is called handler. The idea behind the handler is to listen for DOM events, get their data, and pass it to the model to save it. Once the model finishes saving the data, will trigger an event that usually the view was listening for in order to repaint the DOM.
 
 
-![Structure](/public/images/mvc.jpg)
+![Structure](http://pablovallejo.github.io/gillie/public/images/mvc.jpg)
 
 ### Philosophy
 
