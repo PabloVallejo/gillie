@@ -1,8 +1,5 @@
 /**
-* General Guillie tests
-*
-* Model, View and Controller have the same methods and structure,
-* so by this version `0.2` of Gillie, they can be tested the same way.
+* General Gillie tests
 */
 
 $( document ).ready( function() {
