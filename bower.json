@@ -1,0 +1,25 @@
+{
+  "name": "gillie",
+  "main": "gillie.js",
+  "version": "0.2.0",
+  "homepage": "http://pablovallejo.github.io/gillie",
+  "dependencies": {
+    "jquery": "~1.11.0"
+  },
+  "authors": [
+    "Pablo Vallejo <pabloninety@gmail.com>"
+  ],
+  "description": "Lightweight JavaScript framework inspired in Backbone",
+  "keywords": [
+    "javascript",
+    "framework",
+    "mvc",
+    "rest"
+  ],
+  "ignore": [
+    "node_modules",
+    "bower_components",
+    "tests"
+  ],
+  "license": "MIT"
+}
