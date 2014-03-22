@@ -72,7 +72,7 @@ var appHandler = new AppHandler();
 When `Post` finishes with the request, it will trigger the `event` in the model passing an instance and the server's response to listeners.
 
 {% highlight js %}
-var TodoModel = Gillie.Handler.extend({
+var TodoModel = Gillie.Model.extend({
 
     url: 'http://localhost/api/'
 
