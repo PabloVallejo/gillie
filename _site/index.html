@@ -256,6 +256,35 @@ we decided not no implement Backbone until we learned more about how to use it. 
 <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;js/yourapp.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
 </code></pre></div>
 
+<p><a name="order-of-scripts-inclusion"></a></p>
+
+<h3>Order of scripts inclusion</h3>
+
+<p>When including you app scripts, it&#39;s important to include first, <strong>Models</strong>, the <strong>Views</strong> and <strong>Handlers</strong> at the end, so that <strong>Views</strong>, and <strong>Handlers</strong> have access to <strong>Models</strong>.</p>
+
+<p><strong>Good example</strong></p>
+
+<div class="highlight"><pre><code class="html"><span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;js/models/post.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+
+<span class="c">&lt;!-- View will have access to model, and can listen for it&#39;s events  --&gt;</span>
+<span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;js/views/post.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+
+<span class="c">&lt;!-- Handler can create models as they&#39;re defined above --&gt;</span>
+<span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;js/handler/post.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+</code></pre></div>
+
+<p><strong>Bad example</strong></p>
+
+<div class="highlight"><pre><code class="html"><span class="c">&lt;!-- This handler won&#39;t have access to `post` model --&gt;</span>
+<span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;js/handler/post.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+
+<span class="c">&lt;!-- This view, won&#39;t be able to listen to `post` model, as we haven&#39;t defined it yet. --&gt;</span>
+<span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;js/views/post.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+
+<span class="c">&lt;!-- When we include models after Views, and Handlers, they won&#39;t have access to it.  --&gt;</span>
+<span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;js/models/post.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+</code></pre></div>
+
 <h3>Credits</h3>
 
 <p>Gillie class structure is based on <a href="http://ejohn.org/blog/simple-javascript-inheritance/">Simple class inheritance</a> by <a href="http://ejohn.org/">John Resig</a>. Events API, DOM events declaration and models have been adapted from <a href="http://backbonejs.org">Backbone</a>.</p>

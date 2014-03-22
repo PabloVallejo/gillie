@@ -158,6 +158,36 @@ It is in this way that Gillie was born.
 <script src="js/yourapp.js"></script>
 {% endhighlight %}
 
+<a name="order-of-scripts-inclusion"></a>
+### Order of scripts inclusion
+
+When including you app scripts, it's important to include first, **Models**, the **Views** and **Handlers** at the end, so that **Views**, and **Handlers** have access to **Models**.
+
+**Good example**
+
+{% highlight html %}
+<script src="js/models/post.js"></script>
+
+<!-- View will have access to model, and can listen for it's events  -->
+<script src="js/views/post.js"></script>
+
+<!-- Handler can create models as they're defined above -->
+<script src="js/handler/post.js"></script>
+{% endhighlight %}
+
+**Bad example**
+{% highlight html %}
+
+<!-- This handler won't have access to `post` model -->
+<script src="js/handler/post.js"></script>
+
+<!-- This view, won't be able to listen to `post` model, as we haven't defined it yet. -->
+<script src="js/views/post.js"></script>
+
+<!-- When we include models after Views, and Handlers, they won't have access to it.  -->
+<script src="js/models/post.js"></script>
+{% endhighlight %}
+
 ### Credits
 
 Gillie class structure is based on [Simple class inheritance](http://ejohn.org/blog/simple-javascript-inheritance/) by [John Resig](http://ejohn.org/). Events API, DOM events declaration and models have been adapted from [Backbone](http://backbonejs.org).
