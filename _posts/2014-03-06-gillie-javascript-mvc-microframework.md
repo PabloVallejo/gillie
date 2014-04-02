@@ -3,7 +3,7 @@ layout: page
 title: Gillie, JavaScript MVC micro framework inspired in Backbone
 ---
 
-Gillie is a lightweight MVC framework inspired in [Backbone](http://backbonejs.org). It provides useful methods to perform RESTful HTTP requests and allows for a separation of concerns using [models](/model), [views](/view) and [handlers](/handler). On the other hand offers an [events](/events) API with which you can make your views listen for model events and take the appropriate actions, following in that way the [observer](http://addyosmani.com/resources/essentialjsdesignpatterns/book/#observerpatternjavascript) design pattern.
+Gillie is a lightweight MVC framework inspired in [Backbone](http://backbonejs.org). It provides useful methods to perform RESTful HTTP requests and allows for a separation of concerns using [models](/gillie/model), [views](/gillie/view) and [handlers](/gillie/handler). On the other hand offers an [events](/gillie/events) API with which you can make your views listen for model events and take the appropriate actions, following in that way the [observer](http://addyosmani.com/resources/essentialjsdesignpatterns/book/#observerpatternjavascript) design pattern.
 
 **Get the code**
 
