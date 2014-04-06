@@ -307,8 +307,11 @@
                     return optional ? match : modelVar || match;
                 });
 
-                return this.url ? this.url + route :
-                    window.location.href + '/' + route;
+                // Use `route` as full URL if its contains
+                // `http:|https:`.
+                return (/^(\/\/|http:|https:).*/.test( route )) ?
+                   route : ( this.url ? this.url + route :
+                       window.location.href + '/' + route );
 
             }
 
