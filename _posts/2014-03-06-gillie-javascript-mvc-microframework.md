@@ -74,11 +74,11 @@ When `Post` finishes with the request, it will trigger the `event` in the model 
 {% highlight js %}
 var TodoModel = Gillie.Model.extend({
 
-    url: 'http://localhost/api/'
+        url: 'http://localhost/api/'
 
-    create: function( event ) {
-        this.Post( 'todo/', event );
-    }
+    ,   create: function( event ) {
+            this.Post( 'todo/', event );
+        }
 
 });
 
