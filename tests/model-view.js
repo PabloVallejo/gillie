@@ -1,5 +1,5 @@
 /**
-* General Gillie tests
+* Tests for model and view
 */
 
 $( document ).ready( function() {
@@ -99,7 +99,6 @@ $( document ).ready( function() {
     	equal( count, 6 );
 
     });
-
 
 
     test( 'Set and unset', 4, function() {

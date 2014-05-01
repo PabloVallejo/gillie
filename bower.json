@@ -9,7 +9,7 @@
   "authors": [
     "Pablo Vallejo <pabloninety@gmail.com>"
   ],
-  "description": "Lightweight JavaScript framework inspired in Backbone",
+  "description": "Lightweight JavaScript MVC framework inspired in Backbone",
   "keywords": [
     "javascript",
     "framework",

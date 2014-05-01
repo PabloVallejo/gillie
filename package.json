@@ -1,7 +1,7 @@
 {
   "name": "gillie",
   "title": "Gillie",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "JavaScript MVC Microframework",
   "homepage": "http://pablovallejo.github.io/gillie",
   "directories": {
