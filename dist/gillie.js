@@ -12,7 +12,7 @@
     var
 
         // Gillie version
-        version = '0.2.0'
+        version = '0.2.1'
 
     ,   initializing = false
     ,   fnTest = /xyz/.test( function(){ xyz; }) ? /\b_super\b/ : /.*/
@@ -307,8 +307,7 @@
                     return optional ? match : modelVar || match;
                 });
 
-                // Use `route` as full URL if its contains
-                // `http:|https:`.
+                // Use `route` as full URL if its contains `http:` or `https:`.
                 return (/^(\/\/|http:|https:).*/.test( route )) ?
                    route : ( this.url ? this.url + route :
                        window.location.href + '/' + route );
