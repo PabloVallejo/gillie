@@ -7,9 +7,9 @@ Gillie is a lightweight MVC framework inspired in [Backbone](http://backbonejs.o
 
 **Get the code**
 
-<a href="http://pablovallejo.github.io/gillie/dist/gillie.js" class="btn btn-success">Development version (0.2)</a> <small>_16 k_</small>
+<a href="http://pablovallejo.github.io/gillie/dist/gillie.js" class="btn btn-success">Development version (0.2.1)</a> <small>_16 k_</small>
 
-<a href="http://pablovallejo.github.io/gillie/dist/gillie.min.js" class="btn btn-primary">Production version (0.2)</a>
+<a href="http://pablovallejo.github.io/gillie/dist/gillie.min.js" class="btn btn-primary">Production version (0.2.1)</a>
 <small>_4 K_</small>
 
 
