@@ -12,8 +12,8 @@ $(document).ready(function(){
 		url: 'http://myapi.io'
 	});
 
-	// Requests
-	//----------------
+	// Requests test setup
+	//-----------------------
 	module('Gillie requests', {
 
 		setup: function() {
@@ -27,6 +27,7 @@ $(document).ready(function(){
 	});
 
 	// Test Model.Post method
+	// ------------------------
 	test( 'Model.Post', function() {
 
 		// Save user
@@ -35,10 +36,12 @@ $(document).ready(function(){
 		// Get data
 		var data = JSON.parse( this.ajaxSettings.data );
 
-		// Test equality
+		// Test AJAX Settings
 		equal( this.ajaxSettings.type, 'POST' );
 		equal( this.ajaxSettings.dataType, 'json' );
 		equal( this.ajaxSettings.url, 'http://myapi.io/person' );
+
+		// Test sent attributes
 		equal( data.name, person.get( 'name' ) );
 		equal( data.age, person.get( 'age' ) );
 
@@ -53,14 +56,14 @@ $(document).ready(function(){
 		// Get data
 		var data = JSON.parse( this.ajaxSettings.data );
 
-		// Test equality
+		// Test AJAX Settings
 		equal( this.ajaxSettings.type, 'POST' );
 		equal( this.ajaxSettings.dataType, 'json' );
 		equal( this.ajaxSettings.url, 'http://otherapi.io/person' );
+
+		// Sent attributes should math set ones
 		equal( data.name, person.get( 'name' ) );
 		equal( data.age, person.get( 'age' ) );
-
-		console.log( this.ajaxSettings );
 
 	});
 
@@ -79,6 +82,60 @@ $(document).ready(function(){
 		person.Post( 'ttps://otherapi.io/person' );
 		equal( this.ajaxSettings.url, 'http://myapi.iottps://otherapi.io/person' );
 
+	});
+
+	// Test Model.Get
+	// --------------------
+	test( 'Model.Get', function() {
+
+		// Get person info
+		person.set( 'id', 10 )
+			.Get( '/person/:id' );
+
+		// Assert `ajaxSettings` attributes
+		equal( this.ajaxSettings.type, 'GET' );
+		equal( this.ajaxSettings.url, 'http://myapi.io/person/10' );
+		equal( this.ajaxSettings.dataType, 'json' );
+
+	});
+
+	// Test Model.Put
+	//---------------------
+	test( 'Model.Put', function() {
+
+		// Update person
+		person.set({
+				'id': 10
+			,	'age': 20
+			,	'name': 'The Fonz'
+		}).Put( '/person/:id' );
+
+		// Set PUT data
+		var data = JSON.parse( this.ajaxSettings.data );
+
+		// Test AJAX settings
+		equal( this.ajaxSettings.type, 'PUT' );
+		equal( this.ajaxSettings.url, 'http://myapi.io/person/10' );
+		equal( this.ajaxSettings.dataType, 'json' );
+
+		// Attributes should have been sent
+		equal( data.id, 10 );
+		equal( data.age, 20 );
+		equal( data.name, 'The Fonz' );
+	});
+
+	// Test Model.Delete
+	//---------------------
+	test( 'Model.Delete', function() {
+
+		// Delete person #10
+		person.set( 'id', 10 )
+			.Delete( '/person/:id' );
+
+		// Test AJAX settings
+		equal( this.ajaxSettings.type, 'DELETE' );
+		equal( this.ajaxSettings.url, 'http://myapi.io/person/10' );
+		equal( this.ajaxSettings.dataType, 'json' );
 	});
 
 });
