@@ -12,6 +12,11 @@ Gillie is a lightweight MVC framework inspired in [Backbone](http://backbonejs.o
 <a href="http://pablovallejo.github.io/gillie/dist/gillie.min.js" class="btn btn-primary">Production version (0.2.1)</a>
 <small>_4 K_</small>
 
+**Using Gillie with a CDN. Provided by [CdnJS](http://cdnjs.com/libraries/gillie)**
+{% highlight html %}
+<script src="//cdnjs.cloudflare.com/ajax/libs/gillie/0.2.1/gillie.min.js"></script>
+{% endhighlight %}
+
 
 --------------
 
