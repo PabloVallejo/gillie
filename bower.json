@@ -1,7 +1,7 @@
 {
   "name": "gillie",
   "main": "gillie.js",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "homepage": "http://pablovallejo.github.io/gillie",
   "dependencies": {
     "jquery": "~1.11.0"
