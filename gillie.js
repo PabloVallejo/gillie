@@ -99,20 +99,8 @@
 		var ev,
 			i = -1,
 			l = evts.length,
-			// @todo: clean
-			a1 = args[0],
-			a2 = args[1],
-			a3 = args[2];
-
-		// @todo: clean
-		switch(args.length) {
-			case 0: while(++i < l) (ev = evts[i]).callback.call(ev.ctx); return;
-			case 1: while(++i < l) (ev = evts[i]).callback.call(ev.ctx, a1); return;
-			case 2: while(++i < l) (ev = evts[i]).callback.call(ev.ctx, a1, a2); return;
-			case 3: while(++i < l) (ev = evts[i]).callback.call(ev.ctx, a1, a2, a3); return;
-			default: while(++i < l) (ev = evts[i]).callback.apply(ev.ctx, args);
-		}
-
+			p = (args.length > 3) ? args : args.slice(args.length);
+		while(++i < l) (ev = evts[i]).callback.apply(ev.ctx, p);
 	}
 
 	var listenMethods = {
