@@ -1,5 +1,5 @@
 {
-	"laxcomma": true
-  "browser"  : true,
-  "jquery"   : true,
+  "laxcomma": true,
+  "browser": true,
+  "jquery": true
 }
