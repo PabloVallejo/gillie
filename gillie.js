@@ -37,12 +37,12 @@
 	// https://github.com/jashkenas/backbone/blob/master/backbone.js#L69
 	var Events = Gillie.Events = {
 		// Bind to events.
-		on: function (name, callback, context) {
+		on: function(name, callback, context) {
 			if (!eventsApi(this, 'on', name, [callback, context]) || !callback) return this;
 
 			this._events || (this._events = {});
 
-			this._events.name || (this._events.name = []).push({
+			(this._events[name] || (this._events[name] = [])).push({
 				callback: callback,
 				context: context,
 				ctx: context || this
@@ -122,7 +122,7 @@
 	// Inversion-of-control versions of `on` and `once`. Tell *this* object to
 	// listen to an event in another object ... keeping track of what it's
 	// listening to.
-	$.each(listenMethods, function(implementation, method) {
+	$.each(listenMethods, function (implementation, method) {
 		Events[method] = function (obj, name, callback) {
 			var listeners = this._listeners || (this._listeners = {}),
 				id = obj._listenerId || (obj._listenerId = uniqueId('l'));
@@ -140,7 +140,7 @@
 		// Gillie.Handler
 		// Handlers are used to listen for DOM events, get data from them
 		// and then route that data to a controller, view or model.
-		Gillie.Handler = function Handler(options) {
+		var Handler = Gillie.Handler = function (options) {
 			if (this.initialize) this.initialize.apply(this, arguments);
 			this.delegateEvents();
 		}
@@ -149,10 +149,8 @@
 		var delegateEventSplitter = /^(\S+)\s*(.*)$/;
 
 		_extend(Handler.prototype, Events, {
-
-						// Create a function that bound to a given object.
-						// Adapted from underscore `_.bind()`.
-						// https://github.com/jashkenas/underscore/blob/master/underscore.js#L583
+			// Create a function that bound to a given object.
+			// https://github.com/jashkenas/underscore/blob/master/underscore.js#L583
 			bind: function (fn, context) {
 				return function () {
 					return fn.apply(context, arguments);
@@ -177,19 +175,18 @@
 						// Element to bind events to. Take document as fallback.
 						el = this.el || document;
 
-						// Method
-						method = this.bind(method, this);
+					// Method
+					method = this.bind(method, this);
 
-						if ( selector === '' ) {
-								$( el ).on( eventName, method );
-						} else {
-								$( el ).on( eventName, selector, method );
-						}
+					if (selector === '') {
+						$(el).on(eventName, method);
+					} else {
+						$(el).on(eventName, selector, method);
+					}
 				}
 
 				return this;
 			}
-
 		});
 
 
@@ -197,221 +194,195 @@
 		// Models take care of talking to the server by making AJAX requests
 		// and then triggering events so that views that are listening to them
 		// can do actions with the returned data.
-		var Model = Gillie.Model = function( attributes ) {
-				var defaults;
-				var attrs = attributes || {};
-				this.cid = uniqueId( 'c' );
-				this.attributes = {};
-				if ( defaults = this.defaults ) {
-						attrs = $.extend( {}, defaults, attrs );
-				}
+		var Model = Gillie.Model = function (attrs) {
+			var defaults;
+			attrs = attrs || {};
+			this.attributes = {};
+			this.cid = uniqueId('c');
 
-				// Set new attributes
-				//
-				//      this.set( attrs );
-				//
-				this.attributes = attrs;
-				if ( this.initialize ) this.initialize();
+			if (defaults = this.defaults) {
+				attrs = $.extend({}, defaults, attrs);
+			}
 
+			this.attributes = attrs;
+			if (this.initialize) this.initialize();
 		}
 
 		// Cached regular expressions for matching named param parts and splatted
 		// parts of route strings.
 		// Adapted from https://github.com/jashkenas/backbone/blob/master/backbone.js#L1219
-		,   namedParam    = /(\(\?)?:\w+/g
+		var namedParam = /(\(\?)?:\w+/g;
 
 		// Cached regexp for removing a trailing slash.
-		,   trailingSlash = /\/$/;
+		var trailingSlash = /\/$/;
 
+		_extend(Model.prototype, Events, {
+			// Set one attribute or several attributes, on the model.
+			//
+			//      // Setting attributes in a model instance.
+			//      model.set({ foo: 1, bar: 2 });
+			//
+			set: function( key, val, options ) {
+					var attr,  attrs, current, unset;
 
-		_extend( Model.prototype, Events, {
+					if (key== null ) return this;
 
+					// As Backbone's "set", handle both `"key"`, value
+					// and `{ key: value }` - style arguments.
+					if ( typeof key === 'object' ) {
+							attrs = key;
+							options = val;
 
-						// Set one attribute or several attributes, on the model.
-						//
-						//      // Setting attributes in a model instance.
-						//      model.set({ foo: 1, bar: 2 });
-						//
-						set: function( key, val, options ) {
-								var attr,  attrs, current, unset;
+					} else {
+							( attrs = {} )[ key ] = val;
+					}
 
-								if (key== null ) return this;
+					options || ( options = {} );
 
-								// As Backbone's "set", handle both `"key"`, value
-								// and `{ key: value }` - style arguments.
-								if ( typeof key === 'object' ) {
-										attrs = key;
-										options = val;
+					// Get options
+					unset = options.unset;
 
-								} else {
-										( attrs = {} )[ key ] = val;
-								}
+					// Store current attributes.
+					current = this.attributes;
 
-								options || ( options = {} );
+					// Set every attribute that was passed.
+					for ( attr in attrs ) {
+							val = attrs[ attr ];
 
-								// Get options
-								unset = options.unset;
+							// Always update the attribute.
+							unset ? delete current[ attr ] : current[ attr ] = val;
+					}
 
-								// Store current attributes.
-								current = this.attributes;
+					return this;
+			},
 
-								// Set every attribute that was passed.
-								for ( attr in attrs ) {
-										val = attrs[ attr ];
+			// Backbone's "get", which get the value of an attribute.
+			get: function (attr) {
+				return this.attributes[attr];
+			},
 
-										// Always update the attribute.
-										unset ? delete current[ attr ] : current[ attr ] = val;
-								}
+			// Remove an attribute from the model.
+			unset: function (attr, options) {
+				return this.set(attr, void 0, _extend({}, options, {unset: true}));
+			},
 
-								return this;
+			// Return a copy of the model's "attributes" object
+			toJSON: function () {
+				return $.extend({}, this.attributes);
+			},
 
-						}
+			// Parse a router string setting the respective values of named
+			// variables based on model attributes.
+			//
+			//      var route = this.buildRequestUrl( 'user/:id/statuses/:page' );
+			//
+			buildRequestUrl: function (route) {
+				var self = this;
 
-						// Backbone's "get", which get the value of an attribute.
-				,   get: function( attr ) {
-								return this.attributes[ attr ];
-						}
+				route = route.replace(namedParam, function (match, optional) {
+					// Loop through each name variable getting value from model
+					var modelVar = self.get(match.replace(':', ''));
+					return optional ? match : modelVar || match;
+				});
 
-						// Remove an attribute from the model.
-				,   unset: function( attr, options ) {
-								return this.set( attr, void 0, _extend( {}, options, { unset: true } ) );
-						}
+				// Use `route` as full URL if its contains `http:` or `https:`.
+				var base = this.url || (window.location.href + '/');
+				return (/^(\/\/|http:|https:).*/.test(route)) ? route : base + route;
+			},
 
-						// Return a copy of the model's "attributes" object
-				,   toJSON: function() {
-								return $.extend( {}, this.attributes );
-						}
-
-						// Parse a router string setting the respective values of named
-						// variables based on model attributes.
-						//
-						//      var route = this.buildRequestUrl( 'user/:id/statuses/:page' );
-						//
-				,   buildRequestUrl: function( route ) {
-
-								var varName, modelVar, _this = this
-								,   route;
-
-								route = route.replace( namedParam, function( match, optional ) {
-
-										// Loop through each name variable getting value from model
-										varName = match.replace( ':', '' );
-										modelVar = _this.get( varName );
-
-										return optional ? match : modelVar || match;
-								});
-
-								// Use `route` as full URL if its contains `http:` or `https:`.
-								return (/^(\/\/|http:|https:).*/.test( route )) ?
-									 route : ( this.url ? this.url + route :
-											 window.location.href + '/' + route );
-
-						}
-
-						// Proxy to `Gillie.sync` by default
-				,   sync: function() {
-								return Gillie.sync.apply( this, arguments );
-						}
-
+			// Proxy to `Gillie.sync` by default
+			sync: function () {
+				return Gillie.sync.apply(this, arguments);
+			}
 		});
 
 		// Request wrappers that will be implements on model
 		var methodsAlias = [
-								[ 'Get', 'read' ], [ 'Post', 'create' ]
-						,   [ 'Put', 'update' ], [ 'Delete', 'delete' ]
-						,   [ 'Patch', 'patch' ]
-				]
-		,   requestMethods = {};
+			['Get', 'read'], ['Post', 'create'], ['Put', 'update'], ['Delete', 'delete'], ['Patch', 'patch']
+		], requestMethods = {};
 
-		// Create each method in the `requestMethods` object so that we can
-		// extend the model with it.
-		$.each( methodsAlias , function( k, v ) {
+		// Create each method in the `requestMethods` object so that we can extend the model with it.
+		$.each(methodsAlias , function (k, v) {
 
-				// Request methods
-				//
-				//      // Make a post request to the specified path with named
-				//      // variables, in this case `:query` and `:page` which match model attributes.
-				//
-				//      // Note that each request takes `model.url` as the base for the AJAX URL
-				//      // and when it isn't present, uses `window.location.href` as base URL.
-				//      model._post( 'search/:query/:page', 'custom_event', options );
-				//
-				requestMethods[ v[ 0 ] ] = function( path, event, options ) {
+			// Request methods:
+			//  Make a post request to the specified path with named
+			//  variables, in this case `:query` and `:page` which match model attributes.
+			//
+			//  Note that each request takes `model.url` as the base for the AJAX URL
+			//  and when it isn't present, uses `window.location.href` as base URL.
+			//  model._post( 'search/:query/:page', 'custom_event', options );
+			requestMethods[ v[ 0 ] ] = function (path, event, options) {
+				options = options || {};
+				var xhr, model = this,
+					success = options.success;
 
-								options = options ? options : {};
-								var xhr, model = this
-								,   success = options.success;
+				// Default success function
+				options.success = function (resp) {
+					// Call passed "success" function if specified.
+					if (success) success(model, resp, options);
+					model.trigger(event, model, resp, options);
+				}
 
-								// Default success function
-								options.success = function( resp ) {
+				// Add path to the base URL.
+				options.url = this.buildRequestUrl(path);
 
-										// Call passed "success" function if specified.
-										if ( success ) success( model, resp, options );
-										model.trigger( event, model, resp, options );
-								}
-
-								// Add path to the base URL.
-								options.url = this.buildRequestUrl( path );
-
-								xhr = this.sync( v[ 1 ], this, options );
-								return xhr;
-
-						}
+				xhr = this.sync(v[ 1 ], this, options);
+				return xhr;
+			}
 		});
 
 		// Add request methods to model
-		_extend( Model.prototype, requestMethods );
+		_extend(Model.prototype, requestMethods);
 
 
 		// Gillie.View
 		// In Gillie, views are taken care of affecting DOM elements,
 		// that means, they subscribe to models events, when these events
 		// are triggered, views print the new data, of show feedback, etc.
-		Gillie.View = function View() {
+		var View = Gillie.View = function () {
 			if (this.initialize) this.initialize();
 		}
-		_extend( View.prototype, Events );
+
+		_extend(View.prototype, Events);
 
 
 		// Gillie.sync
 		//
-		Gillie.sync = function( method, model, options ) {
+		Gillie.sync = function (method, model, options) {
+			var type = methodMap[method];
 
-				var type = methodMap[ method ];
+			// Default JSON-request options
+			var params = {type: type, dataType: 'json'};
 
-				// Default JSON-request options
-				var params = { type: type, dataType: 'json' };
+			// Make sure we have an URL.
+			if (!options.url) {
+				params.url = model.url;
+			}
 
-				// Make sure we have an URL.
-				if ( ! options.url ) {
-						params.url = model.url;
+			// Ensure that we have the appropriate data
+			if (options.data == null && model && (method === 'create' || method === 'update' || method === 'patch')) {
+					params.contentType = 'application/json';
+					params.data = JSON.stringify(options.attrs || model.toJSON());
+			}
+
+			// Don't process data on a non-GET request.
+			if (params.type !== 'GET') {
+				params.processData = false;
+			}
+
+			// If we're sending a `PATCH` request and we're in an old Internet Explorer browser
+			// that still has ActiveX enabled by default, override jQuery or Zepto to use that
+			// for XHR instead.
+			if (params.type === 'PATCH' && noXhrPatch) {
+				params.xhr = function () {
+					return new ActiveXObject('Microsoft.XMLHTTP');
 				}
+			}
 
-				// Ensure that we have the appropriate data
-				if ( options.data == null && model && ( method === 'create' || method === 'update' || method === 'patch' ) ) {
-						params.contentType = 'application/json';
-						params.data = JSON.stringify( options.attrs || model.toJSON() );
-				}
-
-				// Don't process data on a non-GET request.
-				if ( params.type !== 'GET' ) {
-						params.processData = false;
-				}
-
-				// If we're sending a `PATCH` request and we're in an old Internet Explorer browser
-				// that still has ActiveX enabled by default, override jQuery or Zepto to use that
-				// for XHR instead.
-				if ( params.type === 'PATCH' && noXhrPatch ) {
-						params.xhr = function() {
-								return new ActiveXObject( "Microsoft.XMLHTTP" );
-						}
-				}
-
-				// Make the request, allowing the user to override any AJAX options.
-				var xhr = options.xhr = Gillie.ajax( $.extend( params, options ) );
-				model.trigger( 'request', model, xhr, options );
-				return xhr;
-
+			// Make the request, allowing the user to override any AJAX options.
+			var xhr = options.xhr = Gillie.ajax($.extend(params, options));
+			model.trigger('request', model, xhr, options);
+			return xhr;
 		}
 
 		var noXhrPatch = typeof window !== 'undefined' && !!window.ActiveXObject && !(window.XMLHttpRequest && (new XMLHttpRequest).dispatchEvent);
